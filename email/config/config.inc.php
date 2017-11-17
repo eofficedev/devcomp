@@ -1,0 +1,14 @@
+<?php 
+		$config["db_dsnw"]="mysql://root:@localhost/eoffice";
+			$config["db_prefix"]="rcube_";
+			$config["default_host"]="ssl://imap.gmail.com";
+			$config["default_port"]="993";
+			$config["smtp_server"]="ssl://smtp.gmail.com";
+			$config["smtp_port"]="465";
+			$config["support_url"]="eOffice.com";
+			$config["skin_logo"]="Logo";
+			$config["des_key"]="iaCY7E!tJeyCI660_FERgmf0";
+			$config["product_name"]="eOffice";
+			$config["plugins"]="Array";
+			$config["language"]="id_ID";
+			$config["mime_param_folding"]="0";

@@ -1,0 +1,80 @@
+/* 
+    Document   : style
+    Created on : 20 Jun 13, 12:53:04
+    Author     : Mike
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#content-sppd-left {
+    min-height: 600px;
+    width: 199px;
+    float:left;
+    border-right: 1px dotted black;
+}
+
+.content-sppd-right {
+    min-height: 600px;
+    width: 800px;
+    float:left;
+}
+
+#sppd-right-filter {
+    border-top:1px dotted black;
+    border-bottom:1px dotted black;
+    height: 25px;
+    width: 800px;
+}
+
+#filter-left {
+    width: 599px;
+    border-right: 1px dotted black;
+    height: 25px;
+    float:left;
+}
+
+#filter-right {
+    width: 200px;
+    height: 25px;
+    float:left;
+}
+
+.sppd-content {
+    width: 800px;
+    border-top: 1px dotted black;
+    border-bottom:1px dotted black;
+    min-height: 130px;
+    margin-top: 10px;
+}
+
+.sppd-img {
+    height: 130px;
+    width: 129px;
+    border-right: 1px dotted black;
+    float:left;
+}
+
+.sppd-data {
+    height: 130px;
+    width: 570px;
+    float: left;
+}
+
+.sppd-opsi {
+    height: 100px;
+    height: 130px;
+    float:left;
+}
+
+.sppd-opsi p a:hover {
+    text-decoration: underline;
+}
+
+.sppd-data p a:hover {
+    text-decoration: underline;
+}
+

@@ -1,0 +1,32 @@
+/* 
+    Document   : profile-style
+    Created on : 24 Jun 13, 11:23:18
+    Author     : Mike
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+#content {
+    min-height: 400px;
+}
+
+#right_content {
+    min-height: 300px;
+    width: 299px;
+    border-right: 1px dotted black;
+    float:left;
+    margin-left: 130px;
+}
+
+#left_content {
+    min-height: 300px;
+    width:520px;
+    float:left;
+}
+
+#left_content table tr td input {
+    width: 200px;
+}

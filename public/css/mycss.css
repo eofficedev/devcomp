@@ -1,0 +1,141 @@
+.enable-bootstrap body {
+  margin: 0 auto;
+}
+.enable-bootstrap header {
+  width: 100%;
+  height: 120px;
+}
+.enable-bootstrap .close-tab {
+  cursor: pointer;
+}
+.enable-bootstrap ::-webkit-scrollbar {
+  width: 12px;
+}
+.enable-bootstrap ::-webkit-scrollbar-track {
+  border: 1px solid #F4f4f4;
+}
+.enable-bootstrap ::-webkit-scrollbar-thumb {
+  border: 1px solid #e4e4e4;
+}
+#compose_detail table tr td{
+  font-weight: bold;
+}
+#form_edit  table tr td{
+ font-weight: bold; 
+}
+#edit_detail table tr td{
+  font-weight: bold;
+
+}
+
+.enable-bootstrap .navigasi-kiri {
+
+  border-right: 2px solid #e4e4e4;
+  width: 33%;
+  height: 1400px;
+  float: left;
+  padding-top: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  overflow: auto;
+  padding-bottom: 5px;
+}
+.enable-bootstrap .form-control {
+  border-radius: 0px 0px  0px 0px;
+}
+.form-control {
+  width: 300px;
+  border-radius: 0px 0px  0px 0px;
+}
+.enable-bootstrap a {
+  color: black;
+}
+.enable-bootstrap .btn {
+  border-radius: 0px 0px  0px 0px;
+  transition: 0.2s;
+}
+.enable-bootstrap .table-kiri {
+  width: 100px;
+}
+.enable-bootstrap tr {
+  vertical-align: top;
+}
+.enable-bootstrap .tengah {
+  width: 100%;
+  height: 100%;
+}
+.enable-bootstrap .ui-dialog{
+  z-index: 99999;
+}
+.enable-bootstrap .nama {
+  font-weight: bold;
+  text-decoration: underline;
+}
+.enable-bootstrap .konten {
+  padding: 0px 10px 10px 10px;
+  height: 100%;
+  width: 67%;
+  font-size: 10pt;
+  float: right;
+}
+.enable-bootstrap {
+  font-size: 10pt;
+}
+#content{
+  font-size: 10pt;
+
+  overflow: auto;
+}
+.enable-bootstrap .konten table tr td{
+
+  margin-bottom: 10px;
+  padding-top: 10px;
+  font-size: 10pt;
+}
+.enable-bootstrap table,
+.enable-bootstrap tr,
+.enable-bootstrap td {
+  font-size: 10pt;
+
+}
+table tr td{
+  padding-top: 10px;
+}
+ td {
+  font-size: 10pt;
+
+}
+.enable-bootstrap table,
+.enable-bootstrap tr{
+  font-size: 10px;
+  width: 100%;
+}
+.enable-bootstrap thead {
+  font-weight: bold;
+}
+.enable-bootstrap .date-pik{
+    width: 150px;
+  margin-top: 0px;
+  margin-left: 50px;
+
+}
+.enable-bootstrap{
+  font-size: 10pt;
+}
+#content ::-webkit-scrollbar-track {
+  border: 1px solid #F4f4f4;
+}
+#content ::-webkit-scrollbar-thumb {
+  border: 1px solid #e4e4e4;
+}
+.enable-bootstrap h1{
+  font-size: 30pt;
+}
+.logo-nota{
+  float:right;
+}
+.enable-bootstrap .logo-nota{
+  float:right;
+}

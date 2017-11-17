@@ -1,0 +1,154 @@
+/* 
+    Document   : login_css
+    Created on : 27 Mei 13, 10:02:32
+    Author     : Mike
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body {
+    font-family: calibri;
+    background-image: url('bg.jpg');
+    background-repeat: repeat-x;
+    background-position: top left;
+    background-attachment: fixed;
+    
+}
+
+#header {
+    margin: auto;
+    clear: both;
+    width:100%;
+    height: 25px;
+    color: white;
+    font-size: smaller;
+    text-align: center;
+}
+
+#content {
+    margin: auto;
+    width:100%;
+    min-height: 400px;
+    background-color:white;
+}
+
+#footer {
+    margin:auto;
+    width: 100%;
+    font-size: smaller;
+    min-height: 15px;
+    text-align: center;
+    color: white;
+}
+
+.error {
+    background-color: #990000;
+    color:white;
+    
+}
+
+#login-content-left{
+    
+}
+
+#footer p {
+    padding-top: 10px;
+}
+
+#title{
+    margin-top: 0px;
+}
+
+#login-form{
+    text-align: center;
+    padding-top: 20px;
+    
+}
+
+#login-form table {
+
+}
+
+#login-form form {
+    margin-left: 70px;
+}
+
+a {
+    text-decoration: none;
+    color: #4f4f4f;
+}
+
+#banner-bottom{
+    width: 100%;
+    margin: auto;
+    margin-top: 20px;
+    height:170px;
+    border: 1px solid white;
+    background-image: url('banner-bottom.jpg');
+}
+
+#banner-bottom-left, #banner-bottom-mid, #banner-bottom-right {
+    width:280px;
+    height: 170px;
+    float:left;
+    color:white;
+}
+
+.banner-title {
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.banner-link {
+    margin-left: 20px;
+    color:white;
+    
+    text-decoration: none;
+}
+
+.banner-link:hover {
+    text-decoration: underline;
+}
+
+#pic {
+    margin-left: 20px;
+}
+
+.content-div {
+    border-top: 1px dotted black;
+    min-height: 100px;
+    width: 800px;
+    border-bottom: 1px dotted black;
+    margin-bottom: 10px;
+}
+
+.content-div-image {
+    height: 100px;
+    width:99px;
+    float:left;
+    border-right: 1px dotted black;
+}
+
+.content-div-data {
+    height: 100px;
+    width: 700px;
+    float:left;
+}
+
+.content-div-data-left {
+    float:left;
+    width: 600px;
+    height: 100px;
+}
+
+.content-div-data-right {
+    float:left;
+    width: 99px;
+    border-left: 1px dotted black;
+    height: 100px;
+}
+
+
+.pagging > a, strong{
+        border: 1px solid black ;
+    }
