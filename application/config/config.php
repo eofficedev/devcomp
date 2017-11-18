@@ -14,7 +14,8 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://118.97.180.123/eofficecloudify/devcomp/';
+// $config['base_url']	= 'http://118.97.180.123/eofficecloudify/devcomp/';
+$config['base_url']	= 'http://localhost/devcomp/';
 $config['upload']	=  $config['base_url'].'/uploads/notadinas/';
 $config['js'] = $config['base_url']."public/js/";
 $config['css'] = $config['base_url']."public/css/";
