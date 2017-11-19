@@ -146,4 +146,36 @@ class Site extends CI_Controller {
         $this->load->view('includes/home_template', $data);
     }
 
+    function admin_dashboard_list_nota_dinas() {
+        $data['title'] = 'Home';
+
+        // Load all required database models
+        $this->load->model('employee');
+        $this->load->model('job');
+        $this->load->model("notadinas/nota_informasi_dash","nota",true);
+        $this->load->model("notadinas/pemeriksa","pemeriksa",true);
+        
+        // Set required UI data (top banner information)
+        $username = $this->session->userdata('username');
+        $data['result'] = $this->employee->get_detail_emp($username);
+        $dt = $data['result']->row();
+        $data['job'] = $this->job->get_job_data_by_code($dt->job_code)->row();
+        $data['app_config'] = $this->admin_config->load_app_config();
+
+        // Set required UI data for the main view/template
+        $this->pemeriksa->set_table("nota_progress_view");
+        
+        $result = $this->nota->get_values();
+        foreach($result as $row){
+            $this->pemeriksa->set_where("nota_id = ". $row->nota_id );
+            $nota_pemeriksa = $this->pemeriksa->tampil();     
+            $row->nota_pemeriksa = json_encode($nota_pemeriksa);
+            if($row->nota_number == '') $row->nota_number = '- (Kosong)';
+        }
+        $data['nota_data'] = $result;
+
+        // Apply the result to the template
+        $data['mid_content'] = 'content/home/dashboard_admin_nota_dinas';
+        $this->load->view('includes/home_template', $data);        
+    }
 }
