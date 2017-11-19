@@ -24,8 +24,8 @@ class index extends ci_controller{
                   $this->load->model("notadinas/emp","pegawai",true);
                   $this->load->model("notadinas/database","tampilan",true);
                   $this->load->model("notadinas/notifikasi","notifikasi",true);
-              $username = $this->session->userdata('username');
-             $this->data['result'] = $this->employee->get_detail_emp($username);
+            $username = $this->session->userdata('username');
+            $this->data['result'] = $this->employee->get_detail_emp($username);
             $employee = $this->data['result'];
             $this->data["user_aktif"] = $employee->row();
             $this->aktif_user = $employee->row();

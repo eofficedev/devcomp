@@ -7,6 +7,7 @@
             ?>
             <li class="topfirst"><a href="<?php echo base_url() ?>index.php/site/admin_index" style="height:15px;line-height:15px;">Home</a></li>
             <li class="topmenu"><a href="<?php echo base_url() ?>index.php/site/admin_dashboard" style="height:15px;line-height:15px;">Dashboard</a></li>
+            <li class="topmenu"><a href="<?php echo base_url() ?>index.php/site/admin_dashboard_list_nota_dinas" style="height:15px;line-height:15px;">Dashboard (List Nota Dinas)</a></li>
             <li class="topmenu"><a href="<?php echo base_url() ?>index.php/site/admin_anggaran" style="height:15px;line-height:15px;">Anggaran</a></li>
             <li class="topmenu"><a href="#" style="height:15px;line-height:15px;"><span>Organisasi</span></a>
                 <ul>

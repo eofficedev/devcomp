@@ -2012,10 +2012,10 @@ DELIMITER ;
 -- Dump completed on 2014-06-09  8:58:48
 
 
-create view vw_absensi as
-select m.id,m.emp_num,m.absen_emp_num, a.waktu,a.keterangan,a.status,e.emp_firstname,e.emp_lastname,j.job_name
-from absensi_monitor m, absensi a, hrms_employees e,hrms_job j
-where
-m.absen_emp_num = a.emp_num and
-a.emp_num = e.emp_num and
-e.emp_job = j.job_num
+-- create view vw_absensi as
+-- select m.id,m.emp_num,m.absen_emp_num, a.waktu,a.keterangan,a.status,e.emp_firstname,e.emp_lastname,j.job_name
+-- from absensi_monitor m, absensi a, hrms_employees e,hrms_job j
+-- where
+-- m.absen_emp_num = a.emp_num and
+-- a.emp_num = e.emp_num and
+-- e.emp_job = j.job_num
