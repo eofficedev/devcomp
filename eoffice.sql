@@ -292,7 +292,9 @@ CREATE TABLE `hrms_employees` (
   `job_code` varchar(10) DEFAULT NULL,
   `org_id` int(11) DEFAULT NULL,
   `org_code` varchar(10) NOT NULL,
-  `pic_url` varchar(100) DEFAULT NULL,
+  `pic_url` varchar(100) DEFAULT NULL,  
+  `email_password` varchar(30) NOT NULL,
+  `email_username` varchar(30) NOT NULL,
   PRIMARY KEY (`emp_num`),
   UNIQUE KEY `emp_id` (`emp_id`),
   KEY `emp_job` (`emp_job`),
@@ -308,7 +310,7 @@ CREATE TABLE `hrms_employees` (
 
 LOCK TABLES `hrms_employees` WRITE;
 /*!40000 ALTER TABLE `hrms_employees` DISABLE KEYS */;
-INSERT INTO `hrms_employees` VALUES (1,'0000000','Administrator','','','0000-00-00','','sgsfs',0,0,0,0,NULL,'',NULL,'',''),(2,'9998','Admin Reservation','','','0000-00-00','','',0,0,0,0,NULL,NULL,NULL,'',NULL),(24,'9999','DEF','','','0000-00-00','','',0,0,0,0,45,NULL,8,'',NULL),(25,'1000025','TAUFIK','ZAMZAMI','L','0000-00-00','BANDUNG','taufikzamzami@gmail.com',10,10,10,0,66,'JAB-110',15,'PTR-001',NULL),(26,'1000026','IRWAN','IRWAN','L','0000-00-00','JAKARTA','irwan@pointer.com',10,10,10,0,67,'JAB-210',16,'PTR-110',NULL),(31,'1000027','REFAD','REFAD','L','0000-00-00','JAKARTA','refad@pointer.co.id',10,10,10,0,70,'JAB-310',19,'PTR-120',NULL),(32,'1000028','ANDRE','ANDRE','L','0000-00-00','JAKARTA','andre@pointer.co.id',10,10,10,0,73,'JAB-410',22,'PTR-130',NULL),(33,'1000029','MONICA','SANJAYA','P','0000-00-00','BANDUNG','moccajaya@gmail.com',10,10,10,0,68,'JAB-211',17,'PTR-111',NULL),(34,'1000030','RIAN','AGUSTAMA','L','0000-00-00','BANDUNG','rianagustama@gmail.com',10,10,10,0,69,'JAB-212',18,'PTR-112',NULL),(35,'1000031','ALVIN','RESMANA','L','0000-00-00','JAKARTA','alvin.resmana@gmail.com',10,10,10,0,71,'JAB-311',20,'PTR-121',NULL),(36,'1000032','DEWI','MULANSARI','P','0000-00-00','BANDUNG','mulansaridewi@gmail.com',10,10,10,0,72,'JAB-312',21,'PTR-122',NULL),(37,'1000033','GIAN','DASUKI','L','0000-00-00','BANDUNG','gian.dasuki@gmail.com',10,10,10,0,74,'JAB-411',23,'PTR-131',NULL),(38,'1000034','ECHA','GOZALI','L','0000-00-00','BANDUNG','echa.echa@gmail.com',10,10,10,0,75,'JAB-412',24,'PTR-132',NULL),(39,'1000035','EKA','KELANA','L','0000-00-00','BANDUNG','kelanaeka@yahoo.com',10,10,10,0,76,'PTR-140',20,'PTR-121',NULL),(40,'1000036','BENGRIS','PASARIBU','L','0000-00-00','BANDUNG','pasaribu@gmail.com',10,10,10,0,77,'PTR-141',23,'PTR-131',NULL),(41,'1000037','WULAN','TRI','L','0000-00-00','BANDUNG','wulantri@gmail.com',10,10,10,0,78,'PTR-142',24,'PTR-132',NULL);
+INSERT INTO `hrms_employees` VALUES( 1, '0000000', 'Administrator', '', '', '0000-00-00', '', 'sgsfs', 0, 0, 0, 0, NULL, '', NULL, '', '', '', ''),( 2, '9998', 'Admin Reservation', '', '', '0000-00-00', '', '', 0, 0, 0, 0, NULL, NULL, NULL, '', NULL, '', '' ),( 24, '9999', 'DEF', '', '', '0000-00-00', '', '', 0, 0, 0, 0, 45, NULL, 8, '', NULL, '', '' ),( 25, '1000025', 'TAUFIK', 'ZAMZAMI', 'L', '0000-00-00', 'BANDUNG', 'taufikzamzami@gmail.com', 10, 10, 10, 0, 66, 'JAB-110', 15, 'PTR-001', NULL, '', '' ),( 26, '1000026', 'IRWAN', 'IRWAN', 'L', '0000-00-00', 'JAKARTA', 'irwan@pointer.com', 10, 10, 10, 0, 67, 'JAB-210', 16, 'PTR-110', NULL, '', '' ),( 31, '1000027', 'REFAD', 'REFAD', 'L', '0000-00-00', 'JAKARTA', 'refad@pointer.co.id', 10, 10, 10, 0, 70, 'JAB-310', 19, 'PTR-120', NULL, '', '' ),( 32, '1000028', 'ANDRE', 'ANDRE', 'L', '0000-00-00', 'JAKARTA', 'andre@pointer.co.id', 10, 10, 10, 0, 73, 'JAB-410', 22, 'PTR-130', NULL, '', '' ),( 33, '1000029', 'MONICA', 'SANJAYA', 'P', '0000-00-00', 'BANDUNG', 'moccajaya@gmail.com', 10, 10, 10, 0, 68, 'JAB-211', 17, 'PTR-111', NULL, '', '' ),( 34, '1000030', 'RIAN', 'AGUSTAMA', 'L', '0000-00-00', 'BANDUNG', 'rianagustama@gmail.com', 10, 10, 10, 0, 69, 'JAB-212', 18, 'PTR-112', NULL, '', '' ),( 35, '1000031', 'ALVIN', 'RESMANA', 'L', '0000-00-00', 'JAKARTA', 'alvin.resmana@gmail.com', 10, 10, 10, 0, 71, 'JAB-311', 20, 'PTR-121', NULL, '', '' ),( 36, '1000032', 'DEWI', 'MULANSARI', 'P', '0000-00-00', 'BANDUNG', 'mulansaridewi@gmail.com', 10, 10, 10, 0, 72, 'JAB-312', 21, 'PTR-122', NULL, '', '' ),( 37, '1000033', 'GIAN', 'DASUKI', 'L', '0000-00-00', 'BANDUNG', 'gian.dasuki@gmail.com', 10, 10, 10, 0, 74, 'JAB-411', 23, 'PTR-131', NULL, '', '' ),( 38, '1000034', 'ECHA', 'GOZALI', 'L', '0000-00-00', 'BANDUNG', 'echa.echa@gmail.com', 10, 10, 10, 0, 75, 'JAB-412', 24, 'PTR-132', NULL, '', '' ),( 39, '1000035', 'EKA', 'KELANA', 'L', '0000-00-00', 'BANDUNG', 'kelanaeka@yahoo.com', 10, 10, 10, 0, 76, 'PTR-140', 20, 'PTR-121', NULL, '', '' ),( 40, '1000036', 'BENGRIS', 'PASARIBU', 'L', '0000-00-00', 'BANDUNG', 'pasaribu@gmail.com', 10, 10, 10, 0, 77, 'PTR-141', 23, 'PTR-131', NULL, '', '' ),( 41, '1000037', 'WULAN', 'TRI', 'L', '0000-00-00', 'BANDUNG', 'wulantri@gmail.com', 10, 10, 10, 0, 78, 'PTR-142', 24, 'PTR-132', NULL, '', '' );
 /*!40000 ALTER TABLE `hrms_employees` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -2019,3 +2021,28 @@ DELIMITER ;
 -- m.absen_emp_num = a.emp_num and
 -- a.emp_num = e.emp_num and
 -- e.emp_job = j.job_num
+CREATE VIEW `view_nota_informasi_dash` as
+SELECT
+	`r`.`nota_id` AS `nota_id`,
+  `r`.`nota_number` AS `nota_number`,
+  `r`.`nota_perihal` AS `nota_perihal`,
+  CONCAT(`e`.`emp_firstname`, ' ', `e`.`emp_lastname`) AS `sender_name`,
+  `e`.`emp_email` AS `sender_email`,
+  CONCAT(`toe`.`emp_firstname`, ' ', `toe`.`emp_lastname`) AS `receiver_name`,
+  `toe`.`emp_email` AS `receiver_email`,
+  (SELECT MAX(`exam_date`) AS `exam_date` FROM `nota_examine` WHERE `nota_id` = `r`.`nota_id` GROUP BY `nota_id`) AS `exam_date`
+FROM
+	(
+    (
+      `nota_data` `r` 
+      JOIN `hrms_employees` `e`
+    ) 	
+    JOIN `hrms_job` `j`
+    JOIN `nota_receiver` `to` ON `r`.`nota_id` = `to`.`nota_id` 
+    JOIN `hrms_employees` `toe` ON `to`.`emp_num` = `toe`.`emp_num`        
+  ) 
+WHERE
+  (
+    (`r`.`nota_sender_num` = `e`.`emp_num`) AND(`e`.`emp_job` = `j`.`job_num`)
+    AND (`to`.`cc_status` = 0)
+  )
