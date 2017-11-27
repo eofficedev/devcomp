@@ -1,15 +1,18 @@
 <?php
 
-class Org extends CI_Controller {
-
-    public function __construct() {
+class Org extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
-        if ($this->session->userdata('username') == "")
+        if ($this->session->userdata('username') == "") {
             die('Forbidden Access');
+        }
         $this->load->helper("kode");
     }
 
-    function index() {
+    public function index()
+    {
         $this->data['title'] = 'List Organization';
         $this->data['result'] = $this->get_session();
         $this->data['app_config'] = $this->admin_config->load_app_config();
@@ -20,58 +23,62 @@ class Org extends CI_Controller {
         $this->load->view('includes/home_template', $this->data);
     }
 
-    function get_session() {
+    public function get_session()
+    {
         $this->load->model('employee');
         $username = $this->session->userdata('username');
         $this->data['result'] = $this->employee->get_detail_emp($username);
         return $this->data['result'];
     }
 
-    function add_org() {
+    public function add_org()
+    {
         $this->data['title'] = 'Add Organization';
         $this->data['result'] = $this->get_session();
         $this->data['app_config'] = $this->admin_config->load_app_config();
         $this->load->model('organization');
         $this->load->model('job');
-     //   $this->data['curr_num'] = $this->organization->load_curr_num();
-      //  $this->data['job_curr'] = $this->job->load_curr_num();
+        //   $this->data['curr_num'] = $this->organization->load_curr_num();
+        //  $this->data['job_curr'] = $this->job->load_curr_num();
         $this->data['org'] = $this->organization->get_all_org_name();
 
         $this->data['mid_content'] = 'content/organization/add_org';
         $this->load->view('includes/home_template', $this->data);
     }
-     function cekOrgId($str){
-       $this->load->model('notadinas/database',"organisasi",true);
+    public function cekOrgId($str)
+    {
+        $this->load->model('notadinas/database', "organisasi", true);
         $this->organisasi->set_table("hrms_organization");
         $this->organisasi->set_order("org_num desc");
         $where["org_id"]=$str;
         $this->organisasi->set_where($where);
         $orgDet = $this->organisasi->tampil();
-        if(count($orgDet)>0){
+        if (count($orgDet)>0) {
             $this->form_validation->set_message('cekOrgId', 'The %s is already exsist');
 
-            return FALSE;
+            return false;
+        } else {
+            return true;
         }
-        else
-            return TRUE;
     }
-    function cekJobId($id){
-        $this->load->model('notadinas/database',"jobnya",true);
+    public function cekJobId($id)
+    {
+        $this->load->model('notadinas/database', "jobnya", true);
         $this->jobnya->set_table("hrms_job");
         $this->jobnya->set_order("job_num desc");
         $where["job_id"]=$id;
         $this->jobnya->set_where($where);
         $jobDet = $this->jobnya->tampil();
-        if(count($jobDet)>0){
+        if (count($jobDet)>0) {
             $this->form_validation->set_message('cekJobId', 'The %s is already exsist');
-            return FALSE;
+            return false;
+        } else {
+            return true;
         }
-        else
-            return TRUE;
     }
 
-    function add_organization() {
-
+    public function add_organization()
+    {
         $this->form_validation->set_rules("org_name", "Organization Name", "trim|required");
         $this->form_validation->set_rules("org_code", "Organization Code", "trim|required");
         $this->form_validation->set_rules("org_address", "Address", "trim|required");
@@ -81,52 +88,48 @@ class Org extends CI_Controller {
         $this->form_validation->set_rules("org_email", "Fax", "trim|required|valid_email");
         $this->form_validation->set_rules("org_postal_code", "Postal Code", "trim|required");
 
-        $this->load->model("notadinas/database","jobnya",true);
+        $this->load->model("notadinas/database", "jobnya", true);
         $this->jobnya->set_table("hrms_job");
         $this->jobnya->set_order("job_num asc");
         $where = array();
         $where["job_id"] = $this->input->post("job_id");
         $this->jobnya->set_where($where);
-        if(count($this->jobnya->tampil())>0 and $this->input->post("konfia")!="Buat sendiri"){
-           
-        }
-        else{
+        if (count($this->jobnya->tampil())>0 and $this->input->post("konfia")!="Buat sendiri") {
+        } else {
             $this->form_validation->set_rules("job_name", "Nama Jabatan", "trim|required");
             $this->form_validation->set_rules("job_code", "Kode Jabatan", "trim|required|min_length[3]|max_length[5]");
             $this->form_validation->set_rules("job_description", "Deskripsi Jabatan", "trim|required");
             $this->form_validation->set_rules("job_id", "Jabatan ID", "callback_cekJobId|required");
         }
-        $this->load->model("notadinas/database","jobnya",true);
+        $this->load->model("notadinas/database", "jobnya", true);
         $this->jobnya->set_table("hrms_job");
         $this->jobnya->set_order("job_num asc");
-            $where = array();
-            $where["job_id"] = $this->input->post("job_id_hr");
-            $this->jobnya->set_where($where);
-            if(count($this->jobnya->tampil())>0 and $this->input->post("konhr")!="Buat sendiri"){
-
-            }
-            else{
-                $this->form_validation->set_rules("job_name_hr", "Nama Jabatan", "trim|required");
-                $this->form_validation->set_rules("job_code_hr", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
-                $this->form_validation->set_rules("job_description_hr", "Deskripsi Jabatan", "trim|required");
-                 $this->form_validation->set_rules("job_id_hr", "Jabatan ID", "callback_cekJobId|required");
-            }
-                $this->form_validation->set_rules("job_name_kepala", "Nama Jabatan", "trim|required");
-                $this->form_validation->set_rules("job_code_kepala", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
-                $this->form_validation->set_rules("job_description_kepala", "Deskripsi Jabatan", "trim|required");
-            $this->form_validation->set_rules("job_id_kepala", "Jabatan ID", "callback_cekJobId|required");
-       if ($this->form_validation->run() != FALSE) {
+        $where = array();
+        $where["job_id"] = $this->input->post("job_id_hr");
+        $this->jobnya->set_where($where);
+        if (count($this->jobnya->tampil())>0 and $this->input->post("konhr")!="Buat sendiri") {
+        } else {
+            $this->form_validation->set_rules("job_name_hr", "Nama Jabatan", "trim|required");
+            $this->form_validation->set_rules("job_code_hr", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
+            $this->form_validation->set_rules("job_description_hr", "Deskripsi Jabatan", "trim|required");
+            $this->form_validation->set_rules("job_id_hr", "Jabatan ID", "callback_cekJobId|required");
+        }
+        $this->form_validation->set_rules("job_name_kepala", "Nama Jabatan", "trim|required");
+        $this->form_validation->set_rules("job_code_kepala", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
+        $this->form_validation->set_rules("job_description_kepala", "Deskripsi Jabatan", "trim|required");
+        $this->form_validation->set_rules("job_id_kepala", "Jabatan ID", "callback_cekJobId|required");
+        if ($this->form_validation->run() != false) {
             $this->load->model('organization');
             $q = $this->organization->add_org();
             if ($q) {
                 $where = array();
                 $where["org_id"]=$this->input->post('org_id');
-                $this->load->model("notadinas/database","organisasinya",true);
+                $this->load->model("notadinas/database", "organisasinya", true);
                 $this->organisasinya->set_table("hrms_organization");
                 $this->organisasinya->set_order("org_id asc");
                 $this->organisasinya->set_where($where);
                 $organisasinya=$this->organisasinya->tampil();
-                if($this->input->post("konhr")=="Buat sendiri"){
+                if ($this->input->post("konhr")=="Buat sendiri") {
                     $val["org_num"]=$organisasinya[0]->org_num;
                     $this->data['status'] = "Organisasi Berhasil Ditambah";
                     $where = array();
@@ -163,14 +166,13 @@ class Org extends CI_Controller {
                 $this->organisasinya->update();
                 redirect('/org');
             }
-        }
-        else {
+        } else {
             $this->add_org();
-
         }
     }
 
-    function view($pg="id",$id) {
+    public function view($pg="id", $id)
+    {
         $this->load->model('organization');
         $this->data['org'] = $this->organization->get_detail_org($id);
         $dt = $this->data['org']->row()->org_num;
@@ -178,8 +180,9 @@ class Org extends CI_Controller {
         $this->data['title'] = 'List Organization';
         $this->data['result'] = $this->get_session();
         $this->data['app_config'] = $this->admin_config->load_app_config();
-        $where["fiatur_job_num"] = $this->data["org"]->row()->job_num;;
-        $this->load->model("notadinas/database","organisasi",true);
+        $where["fiatur_job_num"] = $this->data["org"]->row()->job_num;
+        ;
+        $this->load->model("notadinas/database", "organisasi", true);
         $this->organisasi->set_table("hrms_organization");
         $this->organisasi->set_order("org_num asc");
         $this->organisasi->set_where($where);
@@ -188,7 +191,7 @@ class Org extends CI_Controller {
         $where["hr_job_num"]=$this->data['org']->row()->hr_job_num;
         $this->organisasi->set_where($where);
         $hr =$this->organisasi->tampil();
-        $this->load->model("notadinas/database","jobhr",true);
+        $this->load->model("notadinas/database", "jobhr", true);
         $this->jobhr->set_table("hrms_job");
         $this->jobhr->set_order("job_num asc");
         $this->jobhr->set_where(array("job_num"=>$this->data["org"]->row()->hr_job_num));
@@ -197,36 +200,39 @@ class Org extends CI_Controller {
         $this->organisasi->set_where($where);
 
         $hr =$this->organisasi->tampil();
-        $this->load->model("notadinas/database","jobkepala",true);
+        $this->load->model("notadinas/database", "jobkepala", true);
         $this->jobkepala->set_table("hrms_job");
         $this->jobkepala->set_order("job_num asc");
         $this->jobkepala->set_where(array("job_num"=>$this->data["org"]->row()->kepala_job_num));
         $this->data["kepala"]=$this->jobkepala->tampil()[0];
 
-        if(count($hr)>1)
+        if (count($hr)>1) {
             $this->data["indukhr"]="true";
-        else
+        } else {
             $this->data["indukhr"]="false";
-        if(count($fia)>1)
+        }
+        if (count($fia)>1) {
             $this->data["indukfia"] = "true";
-        else
+        } else {
             $this->data["indukfia"] = "false";
+        }
 
         $this->data['mid_content'] = 'content/organization/update_org';
         $this->load->view('includes/home_template', $this->data);
     }
-    function getfiatur(){
+    public function getfiatur()
+    {
         $where["org_num"] = $this->input->post("org_num");
-        $this->load->model("notadinas/database","organisasi",true);
+        $this->load->model("notadinas/database", "organisasi", true);
         $this->organisasi->set_table("hrms_organization");
         $this->organisasi->set_order("org_num asc");
         $this->organisasi->set_where($where);
         $org = $this->organisasi->tampil();
-        if(count($org)==0)
+        if (count($org)==0) {
             echo "false";
-        else{
+        } else {
             $org = $org[0];
-            $this->load->model("notadinas/database","jobnya",true);
+            $this->load->model("notadinas/database", "jobnya", true);
             $this->jobnya->set_table("hrms_job");
             $this->jobnya->set_order("job_num asc");
             $where = array();
@@ -235,18 +241,19 @@ class Org extends CI_Controller {
             echo json_encode($this->jobnya->tampil()[0]);
         }
     }
-    function gethr(){
+    public function gethr()
+    {
         $where["org_num"] = $this->input->post("org_num");
-        $this->load->model("notadinas/database","organisasi",true);
+        $this->load->model("notadinas/database", "organisasi", true);
         $this->organisasi->set_table("hrms_organization");
         $this->organisasi->set_order("org_num asc");
         $this->organisasi->set_where($where);
         $org = $this->organisasi->tampil();
-        if(count($org)==0)
+        if (count($org)==0) {
             echo "false";
-        else{
+        } else {
             $org = $org[0];
-            $this->load->model("notadinas/database","jobnya",true);
+            $this->load->model("notadinas/database", "jobnya", true);
             $this->jobnya->set_table("hrms_job");
             $this->jobnya->set_order("job_num asc");
             $where = array();
@@ -255,51 +262,52 @@ class Org extends CI_Controller {
             echo json_encode($this->jobnya->tampil()[0]);
         }
     }
-    function getnewkodefiatur(){
-        $this->load->model("notadinas/database","jobnya",true);
+    public function getnewkodefiatur()
+    {
+        $this->load->model("notadinas/database", "jobnya", true);
         $this->jobnya->set_table("hrms_job");
         $this->jobnya->set_order("job_id desc");
         $this->jobnya->set_where("job_id != '9999'");
         $jobnya = $this->jobnya->tampil();
-        if(count($jobnya)==0)
+        if (count($jobnya)==0) {
             echo "2001";
-        else
-            echo ($jobnya[0]->job_id+1);
-    }
-    function upd_organization() {
-        $this->load->model('organization');
-         $this->load->model("notadinas/database","organisasinya",true);
-            $this->organisasinya->set_table("hrms_organization");
-            $this->organisasinya->set_order("org_id asc");
-            $where["org_num !="] = $this->input->post("org_num");
-            $where["org_id"] = $this->input->post("org_id");
-            $this->organisasinya->set_where($where);
-            $cont = $this->organisasinya->tampil();
-        if(count($cont)>0){
-            $this->data["errornya"] = "The Organization ID is already exists";
-            $this->view("id",$this->input->post("org_num"));
-
+        } else {
+            echo($jobnya[0]->job_id+1);
         }
-        else{
-        $q = $this->organization->upd_org();
+    }
+    public function upd_organization()
+    {
+        $this->load->model('organization');
+        $this->load->model("notadinas/database", "organisasinya", true);
+        $this->organisasinya->set_table("hrms_organization");
+        $this->organisasinya->set_order("org_id asc");
+        $where["org_num !="] = $this->input->post("org_num");
+        $where["org_id"] = $this->input->post("org_id");
+        $this->organisasinya->set_where($where);
+        $cont = $this->organisasinya->tampil();
+        if (count($cont)>0) {
+            $this->data["errornya"] = "The Organization ID is already exists";
+            $this->view("id", $this->input->post("org_num"));
+        } else {
+            $q = $this->organization->upd_org();
 
-        if ($q) {
-            $this->load->model("notadinas/database","organisasinya",true);
-            $this->organisasinya->set_table("hrms_organization");
-            $this->organisasinya->set_order("org_id asc");
-            $where["org_num"]=$this->input->post('org_num');
-            $this->organisasinya->set_where($where);
-            $organisasinya = $this->organisasinya->tampil()[0];
-             $this->load->model("notadinas/database","jobnya",true);
+            if ($q) {
+                $this->load->model("notadinas/database", "organisasinya", true);
+                $this->organisasinya->set_table("hrms_organization");
+                $this->organisasinya->set_order("org_id asc");
+                $where["org_num"]=$this->input->post('org_num');
+                $this->organisasinya->set_where($where);
+                $organisasinya = $this->organisasinya->tampil()[0];
+                $this->load->model("notadinas/database", "jobnya", true);
                 $this->jobnya->set_table("hrms_job");
                 $this->jobnya->set_order("job_id desc");
                 $where = "job_id = '".$this->input->post("job_id_hr")."'";
                 $this->jobnya->set_where($where);
                 $jobnya = $this->jobnya->tampil();
-               $hrjobnum =$organisasinya->hr_job_num;
-               $fiajobnum =$organisasinya->fiatur_job_num;
+                $hrjobnum =$organisasinya->hr_job_num;
+                $fiajobnum =$organisasinya->fiatur_job_num;
            
-                if(count($jobnya)==0){
+                if (count($jobnya)==0) {
                     $val["job_id"] = $this->input->post("job_id_hr");
                     $val["job_name"] = $this->input->post("job_name_hr");
                     $val["job_description"] = $this->input->post("job_description_hr");
@@ -307,15 +315,13 @@ class Org extends CI_Controller {
                     $this->jobnya->values=$val;
                     $this->jobnya->simpan();
                     $jobnya = $this->jobnya->tampil();
-                }
-                else{ 
+                } else {
                     $val["job_id"] = $this->input->post("job_id_hr");
                     $val["job_name"] = $this->input->post("job_name_hr");
                     $val["job_description"] = $this->input->post("job_description_hr");
                     $this->jobnya->values=$val;
                     $this->jobnya->update();
                     $jobnya = $this->jobnya->tampil();
-
                 }
 
                 $val=array("hr_job_num"=>$jobnya[0]->job_num);
@@ -330,28 +336,29 @@ class Org extends CI_Controller {
                 $val["job_description"]=$this->input->post("job_description_kepala");
                 $this->jobnya->values=$val;
                 $this->jobnya->update();
-               /* $this->load->model("notadinas/database","pegawainya",true);
-                $this->pegawainya->set_table("hrms_employees");
-                $where = "emp_job = '".$hrjobnum."'";
-                $val=array("emp_job"=>$jobnya[0]->job_num,"job_code"=>$jobnya[0]->job_code);
-                
-                $this->pegawainya->set_where($where);
-                $this->pegawainya->values=$val;
-                $this->pegawainya->update();
-                $where = "job_num = '".$fiajobnum."'";
-                $this->jobnya->set_where($where);
-                $jobnya=$this->jobnya->tampil();
-                $where = "emp_job = '".$fiajobnum."'";
-                $val=array("emp_job"=>$jobnya[0]->job_num,"job_code"=>$jobnya[0]->job_code);
-                $this->pegawainya->set_where($where);
-                $this->pegawainya->values=$val;
-                $this->pegawainya->update();*/
-            redirect('/org');
-        }
+                /* $this->load->model("notadinas/database","pegawainya",true);
+                 $this->pegawainya->set_table("hrms_employees");
+                 $where = "emp_job = '".$hrjobnum."'";
+                 $val=array("emp_job"=>$jobnya[0]->job_num,"job_code"=>$jobnya[0]->job_code);
+
+                 $this->pegawainya->set_where($where);
+                 $this->pegawainya->values=$val;
+                 $this->pegawainya->update();
+                 $where = "job_num = '".$fiajobnum."'";
+                 $this->jobnya->set_where($where);
+                 $jobnya=$this->jobnya->tampil();
+                 $where = "emp_job = '".$fiajobnum."'";
+                 $val=array("emp_job"=>$jobnya[0]->job_num,"job_code"=>$jobnya[0]->job_code);
+                 $this->pegawainya->set_where($where);
+                 $this->pegawainya->values=$val;
+                 $this->pegawainya->update();*/
+                redirect('/org');
+            }
         }
     }
     
-    function hapus_org($orgnum){
+    public function hapus_org($orgnum)
+    {
         $this->load->model('organization');
         $q = $this->organization->delete_org($orgnum);
 
@@ -359,5 +366,4 @@ class Org extends CI_Controller {
             redirect('/org');
         }
     }
-
 }

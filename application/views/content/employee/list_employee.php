@@ -19,8 +19,9 @@
         <?php
             $filter = "Semua Pegawai";
             
-            if($this->input->post('keyword')!=null)
-            $filter = $this->input->post('keyword');
+            if ($this->input->post('keyword')!=null) {
+                $filter = $this->input->post('keyword');
+            }
         ?>
         
         <i>Filter : <?php echo $filter; ?></i></p>
@@ -33,7 +34,7 @@
             <th>Organisasi</th>
         </thead>
     <?php
-        foreach($employees->result() as $row){  
+        foreach ($employees->result() as $row) {
             ?>
             <tr class="emp-data" >
                 <td style="padding-left: 10px;"><a style="color:black;" href="emp/view/id/<?php echo $row->emp_num; ?>"><?php echo $row->emp_id; ?></a></td>
