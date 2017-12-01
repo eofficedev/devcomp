@@ -1,9 +1,9 @@
 <?php
-
 class Login extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->library('PHPRequests');        
     }
 
     function index() {
@@ -22,6 +22,10 @@ class Login extends CI_Controller {
      */
 
     function validate_credentials() {
+        // $response = Requests::get('https://github.com/events');
+        // var_dump($response->body);
+        // return;
+
         $this->load->model('login_model');
         $this->form_validation->set_rules('username', 'Username', 'trim|required');
         $this->form_validation->set_rules('password', 'Password', 'trim|required');
