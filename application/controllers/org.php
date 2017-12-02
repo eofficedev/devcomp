@@ -9,6 +9,8 @@ class Org extends CI_Controller
             die('Forbidden Access');
         }
         $this->load->helper("kode");
+        $this->load->helper("class");
+        load_ci_class(APPPATH . 'services/Organization_service');
     }
 
     public function index()
@@ -18,7 +20,13 @@ class Org extends CI_Controller
         $this->data['app_config'] = $this->admin_config->load_app_config();
 
         $this->load->model('organization');
-        $this->data['org'] = $this->organization->get_all_org();
+        // $org = $this->organization->get_all_org();
+        // $this->data['org'] = $org;
+
+        $test = $this->organization_service->get_all_org();
+        $this->data['org'] = $test;
+        // var_dump($org);
+        // var_dump($test);
         $this->data['mid_content'] = 'content/organization/list_org';
         $this->load->view('includes/home_template', $this->data);
     }

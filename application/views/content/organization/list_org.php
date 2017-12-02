@@ -40,10 +40,10 @@
             <th>Alamat</th>
         </thead>
     <?php
-        foreach($org->result() as $row){  
+        foreach($org as $row){  
 //            ?>
             <tr class="emp-data" >
-                <td style="padding-left: 20px;"><a style="color:black;" href="org/view/id/<?php echo $row->org_num; ?>"><?php echo $row->org_id; ?></a></td>
+                <td style="padding-left: 20px;"><a style="color:black;" href="org/view/id/<?php echo $row->org_num; ?>"><?php echo $row->org_num; ?></a></td>
                 <td style="padding-left: 20px;"><a style="color:black;" href="org/view/id/<?php echo $row->org_num; ?>"><?php echo $row->org_name; ?></a></td>
                 <td style="padding-left: 20px;"><a style="color:black;" href="org/view/id/<?php echo $row->org_num; ?>"><?php echo $row->org_code; ?></a></td>
                 <td style="padding-left: 20px;"><a style="color:black;" href="org/view/id/<?php echo $row->org_num; ?>"><?php echo $row->org_address; ?></a></td>
