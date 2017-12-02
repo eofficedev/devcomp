@@ -36,7 +36,7 @@ class Login extends CI_Controller
             $this->load->view('includes/login_template', $data);
         } else {
             // $query = $this->login_model->validate();
-            $query = $this->Auth_service->authenticate($this->input->post('username'), $this->input->post('password'));
+            $query = $this->auth_service->authenticate($this->input->post('username'), $this->input->post('password'));
 
             if ($query == "Ok_tetap") {
                 $data = array(
