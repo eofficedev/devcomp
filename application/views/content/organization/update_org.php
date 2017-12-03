@@ -17,10 +17,11 @@
             <legend>Informasi Organisasi</legend>
             <table>
                 <?php
-                $row = $org->row();
+                // $row = $org->row();
+                $row = $org;
                 ?>
                 <input type="hidden" id='org_num' name="org_num" value="<?php echo $row->org_num; ?>" />
-                <tr>
+                <!-- <tr>
                     <td>ID Organisasi</td>
                     <td> : <input type="text" name="org_id" value="<?php echo $row->org_id; ?>"/></td>
                     <td class="error-msg">
@@ -29,7 +30,7 @@
                                 echo $errornya;
                         ?>
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td>Nama Organisasi</td>
                     <td> : <input type="text" name="org_name" style="width:300px;" value="<?php echo $row->org_name; ?>"/></td>
@@ -94,19 +95,19 @@
                     <input  class="radionya" type="radio" <?php if($indukfia=="false") echo "checked" ?>  id="buatsendiri" name="konfia" onclick="newJob()"  value="Buat sendiri"> Stand Alone <br>
                 </fieldset>
             <table>
-                <input type="hidden" id="jobnum" name="job_num" value="<?php echo $row->job_num; ?>" />
+                <!-- <input type="hidden" id="jobnum" name="job_num" value="<?php echo $row->job_num; ?>" /> -->
                 <tr>
                     <td>ID Jabatan</td>
-                    <td> : <input type="text" name="job_id" id="idjabatan" style="width:100px" value="<?php echo $row->job_id; ?>" /> </td>
+                    <!-- <td> : <input type="text" name="job_id" id="idjabatan" style="width:100px" value="<?php echo $row->job_id; ?>" /> </td> -->
                 </tr>
                 <tr>
                     <td>Nama Jabatan</td>
-                    <td> : <input type="text" name="job_name" id="namajabatan" style="width:200px;" value="<?php echo $row->job_name; ?>"/></td>
+                    <!-- <td> : <input type="text" name="job_name" id="namajabatan" style="width:200px;" value="<?php echo $row->job_name; ?>"/></td> -->
                 </tr>
                     <input type="hidden" name="job_code" value="FIA"/>
                 <tr>
                     <td>Deskripsi Jabatan   : </td>
-                    <td> &nbsp;&nbsp;<textarea name="job_description" id="deskripsijabatan" cols="20" rows="5"><?php echo $row->job_description; ?></textarea> </td>
+                    <!-- <td> &nbsp;&nbsp;<textarea name="job_description" id="deskripsijabatan" cols="20" rows="5"><?php echo $row->job_description; ?></textarea> </td> -->
                 </tr>
             </table>
         </fieldset>

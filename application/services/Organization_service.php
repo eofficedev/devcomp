@@ -11,14 +11,22 @@ class Organization_service
         $this->CI->config->load('eoffice_api');
     }
 
-    public function get_all_org()
+    public function get_all_org($filter, $keyword)
     {
         if ($this->CI == null) {
             throw new Exception('$CI instance not set! Please set it inside constructor.');
         }
-        $uri = $this->CI->config->item('eoffice_base_url') . '/organizations';
-        // $data = array('username' => $username, 'password' => $password);
-        // $headers = array('Content-Type' => 'application/json');
+        $uri = $this->CI->config->item('eoffice_base_url') . '/organizations?filter='. $filter .'&keyword='. $keyword;
+        $response = Requests::get($uri);
+        return json_decode($response->body);
+    }
+
+    public function get_byid_org($id)
+    {
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+        $uri = $this->CI->config->item('eoffice_base_url') . '/organizations/byid?id='. $id;        
         $response = Requests::get($uri);
         return json_decode($response->body);
     }

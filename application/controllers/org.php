@@ -23,7 +23,7 @@ class Org extends CI_Controller
         // $org = $this->organization->get_all_org();
         // $this->data['org'] = $org;
 
-        $test = $this->organization_service->get_all_org();
+        $test = $this->organization_service->get_all_org($this->input->post('filter'), $this->input->post('keyword'));
         $this->data['org'] = $test;
         // var_dump($org);
         // var_dump($test);
@@ -182,36 +182,38 @@ class Org extends CI_Controller
     public function view($pg="id", $id)
     {
         $this->load->model('organization');
-        $this->data['org'] = $this->organization->get_detail_org($id);
-        $dt = $this->data['org']->row()->org_num;
+        // $this->data['org'] = $this->organization->get_detail_org($id);
+        $this->data['org'] = $this->organization_service->get_byid_org($id)[0];
+        //$dt = $this->data['org']->row()->org_num;
+        $dt = $this->data['org']->org_num;
         $this->data['all_org'] = $this->organization->get_all_org_name($dt);
         $this->data['title'] = 'List Organization';
         $this->data['result'] = $this->get_session();
         $this->data['app_config'] = $this->admin_config->load_app_config();
-        $where["fiatur_job_num"] = $this->data["org"]->row()->job_num;
+        // $where["fiatur_job_num"] = $this->data["org"]->row()->job_num;
         ;
         $this->load->model("notadinas/database", "organisasi", true);
         $this->organisasi->set_table("hrms_organization");
         $this->organisasi->set_order("org_num asc");
-        $this->organisasi->set_where($where);
+        // $this->organisasi->set_where($where);
         $fia = $this->organisasi->tampil();
         $where=array();
-        $where["hr_job_num"]=$this->data['org']->row()->hr_job_num;
+        // $where["hr_job_num"]=$this->data['org']->row()->hr_job_num;
         $this->organisasi->set_where($where);
         $hr =$this->organisasi->tampil();
         $this->load->model("notadinas/database", "jobhr", true);
         $this->jobhr->set_table("hrms_job");
         $this->jobhr->set_order("job_num asc");
-        $this->jobhr->set_where(array("job_num"=>$this->data["org"]->row()->hr_job_num));
+        // $this->jobhr->set_where(array("job_num"=>$this->data["org"]->row()->hr_job_num));
         $this->data["jobhr"]=$this->jobhr->tampil()[0];
-        $where["hr_job_num"]=$this->data['org']->row()->hr_job_num;
+        // $where["hr_job_num"]=$this->data['org']->row()->hr_job_num;
         $this->organisasi->set_where($where);
 
         $hr =$this->organisasi->tampil();
         $this->load->model("notadinas/database", "jobkepala", true);
         $this->jobkepala->set_table("hrms_job");
         $this->jobkepala->set_order("job_num asc");
-        $this->jobkepala->set_where(array("job_num"=>$this->data["org"]->row()->kepala_job_num));
+        // $this->jobkepala->set_where(array("job_num"=>$this->data["org"]->row()->kepala_job_num));
         $this->data["kepala"]=$this->jobkepala->tampil()[0];
 
         if (count($hr)>1) {
