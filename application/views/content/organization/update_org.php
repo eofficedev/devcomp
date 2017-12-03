@@ -26,8 +26,9 @@
                     <td> : <input type="text" name="org_id" value="<?php echo $row->org_id; ?>"/></td>
                     <td class="error-msg">
                         <?php
-                            if(isset($errornya))
+                            if (isset($errornya)) {
                                 echo $errornya;
+                            }
                         ?>
                     </td>
                 </tr> -->
@@ -72,9 +73,9 @@
                             <?php
                             foreach ($all_org->result() as $row2) {
                                 ?>
-                                <option value="<?php echo $row2->org_num; ?>" <?php if ($row2->org_num == $row->org_sub) {
-                                echo "selected=\"selected\"";
-                            } ?>><?php echo $row2->org_name; ?></option>
+                                <option value="<?php echo $row2->org_num; ?>" <?php if ($row2->org_num == $row->org_parent) {
+                                    echo "selected=\"selected\"";
+                                } ?>><?php echo $row2->org_name; ?></option>
                                 <?php
                             }
                             ?>
@@ -91,8 +92,12 @@
         <fieldset>
             <legend>Konfigurasi Fiatur</legend>
             <fieldset id="settingfiatur" >
-                    <input class="radionya" type="radio"  <?php if($indukfia=="true") echo "checked" ?>  id="dariinduk" name="konfia" onclick="cekJob()" value="dari induk"> Dari induk <br>
-                    <input  class="radionya" type="radio" <?php if($indukfia=="false") echo "checked" ?>  id="buatsendiri" name="konfia" onclick="newJob()"  value="Buat sendiri"> Stand Alone <br>
+                    <input class="radionya" type="radio"  <?php if ($indukfia=="true") {
+                                echo "checked";
+                            } ?>  id="dariinduk" name="konfia" onclick="cekJob()" value="dari induk"> Dari induk <br>
+                    <input  class="radionya" type="radio" <?php if ($indukfia=="false") {
+                                echo "checked";
+                            } ?>  id="buatsendiri" name="konfia" onclick="newJob()"  value="Buat sendiri"> Stand Alone <br>
                 </fieldset>
             <table>
                 <!-- <input type="hidden" id="jobnum" name="job_num" value="<?php echo $row->job_num; ?>" /> -->
@@ -114,8 +119,12 @@
          <fieldset>
             <legend>Konfigurasi HR</legend>
                 <fieldset id="settinghr" style="">
-                    <input class="radionya" type="radio" id="dariindukhr" name="konhr" <?php if($indukhr=="true") echo "checked" ?> onclick="cekJobHr()" value="dari induk"> Dari induk <br>
-                    <input  class="radionya" type="radio" id="buatsendirihr" name="konhr" <?php if($indukhr=="false") echo "checked" ?> onclick="newJobHr()"  value="Buat sendiri"> Stand Alone <br>
+                    <input class="radionya" type="radio" id="dariindukhr" name="konhr" <?php if ($indukhr=="true") {
+                                echo "checked";
+                            } ?> onclick="cekJobHr()" value="dari induk"> Dari induk <br>
+                    <input  class="radionya" type="radio" id="buatsendirihr" name="konhr" <?php if ($indukhr=="false") {
+                                echo "checked";
+                            } ?> onclick="newJobHr()"  value="Buat sendiri"> Stand Alone <br>
                 </fieldset>
             <table style="width:640px;">
                 <input type="hidden" id="numjobhr" name="job_num_hr" value="<?php echo $jobhr->job_num; ?>" />

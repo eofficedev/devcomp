@@ -299,53 +299,71 @@ class Org extends CI_Controller
             $this->data["errornya"] = "The Organization ID is already exists";
             $this->view("id", $this->input->post("org_num"));
         } else {
-            $q = $this->organization->upd_org();
+
+            // $q = $this->organization->upd_org();
+            $org_model = array(
+                'org_num'=> $this->input->post('org_num'),
+                'org_id'=> $this->input->post('org_id'),
+                'org_name'=>$this->input->post('org_name'),
+                'org_code'=>$this->input->post('org_code'),
+                'org_address'=>$this->input->post('org_address'),
+                'org_email'=>$this->input->post('org_email'),
+                'org_work_telp'=>$this->input->post('org_work_telp'),
+                'org_fax'=>$this->input->post('org_fax'),
+                'org_postal_code'=>$this->input->post('org_postal_code')
+            );
+            $q = $this->organization_service->upd_organization($org_model);
+            // var_dump($org_model);
+            var_dump($q);
 
             if ($q) {
-                $this->load->model("notadinas/database", "organisasinya", true);
-                $this->organisasinya->set_table("hrms_organization");
-                $this->organisasinya->set_order("org_id asc");
-                $where["org_num"]=$this->input->post('org_num');
-                $this->organisasinya->set_where($where);
-                $organisasinya = $this->organisasinya->tampil()[0];
-                $this->load->model("notadinas/database", "jobnya", true);
-                $this->jobnya->set_table("hrms_job");
-                $this->jobnya->set_order("job_id desc");
-                $where = "job_id = '".$this->input->post("job_id_hr")."'";
-                $this->jobnya->set_where($where);
-                $jobnya = $this->jobnya->tampil();
-                $hrjobnum =$organisasinya->hr_job_num;
-                $fiajobnum =$organisasinya->fiatur_job_num;
+                // redirect('/org');  
+
+                // $this->load->model("notadinas/database", "organisasinya", true);
+                // $this->organisasinya->set_table("hrms_organization");
+                // $this->organisasinya->set_order("org_id asc");
+                // $where["org_num"]=$this->input->post('org_num');
+                // $this->organisasinya->set_where($where);
+                // $organisasinya = $this->organisasinya->tampil()[0];
+                // $this->load->model("notadinas/database", "jobnya", true);
+                // $this->jobnya->set_table("hrms_job");
+                // $this->jobnya->set_order("job_id desc");
+                // $where = "job_id = '".$this->input->post("job_id_hr")."'";
+                // $this->jobnya->set_where($where);
+                // $jobnya = $this->jobnya->tampil();
+                // $hrjobnum =$organisasinya->hr_job_num;
+                // $fiajobnum =$organisasinya->fiatur_job_num;
            
-                if (count($jobnya)==0) {
-                    $val["job_id"] = $this->input->post("job_id_hr");
-                    $val["job_name"] = $this->input->post("job_name_hr");
-                    $val["job_description"] = $this->input->post("job_description_hr");
-                    $val["org_num"] = $organisasinya->org_num;
-                    $this->jobnya->values=$val;
-                    $this->jobnya->simpan();
-                    $jobnya = $this->jobnya->tampil();
-                } else {
-                    $val["job_id"] = $this->input->post("job_id_hr");
-                    $val["job_name"] = $this->input->post("job_name_hr");
-                    $val["job_description"] = $this->input->post("job_description_hr");
-                    $this->jobnya->values=$val;
-                    $this->jobnya->update();
-                    $jobnya = $this->jobnya->tampil();
-                }
+                // if (count($jobnya)==0) {
+                //     $val["job_id"] = $this->input->post("job_id_hr");
+                //     $val["job_name"] = $this->input->post("job_name_hr");
+                //     $val["job_description"] = $this->input->post("job_description_hr");
+                //     $val["org_num"] = $organisasinya->org_num;
+                //     $this->jobnya->values=$val;
+                //     $this->jobnya->simpan();
+                //     $jobnya = $this->jobnya->tampil();
+                // } else {
+                //     $val["job_id"] = $this->input->post("job_id_hr");
+                //     $val["job_name"] = $this->input->post("job_name_hr");
+                //     $val["job_description"] = $this->input->post("job_description_hr");
+                //     $this->jobnya->values=$val;
+                //     $this->jobnya->update();
+                //     $jobnya = $this->jobnya->tampil();
+                // }
 
-                $val=array("hr_job_num"=>$jobnya[0]->job_num);
-                $this->organisasinya->values=$val;
-                $this->organisasinya->update();
+                // $val=array("hr_job_num"=>$jobnya[0]->job_num);
+                // $this->organisasinya->values=$val;
+                // $this->organisasinya->update();
 
-                $val=array();
-                $where= array();
-                $where["job_num"] = $this->input->post("job_num_kepala");
-                $this->jobnya->set_where($where);
-                $val["job_name"]=$this->input->post("job_name_kepala");
-                $val["job_description"]=$this->input->post("job_description_kepala");
-                $this->jobnya->values=$val;
-                $this->jobnya->update();
+                // $val=array();
+                // $where= array();
+                // $where["job_num"] = $this->input->post("job_num_kepala");
+                // $this->jobnya->set_where($where);
+                // $val["job_name"]=$this->input->post("job_name_kepala");
+                // $val["job_description"]=$this->input->post("job_description_kepala");
+                // $this->jobnya->values=$val;
+                // $this->jobnya->update();
+                
                 /* $this->load->model("notadinas/database","pegawainya",true);
                  $this->pegawainya->set_table("hrms_employees");
                  $where = "emp_job = '".$hrjobnum."'";
@@ -362,7 +380,8 @@ class Org extends CI_Controller
                  $this->pegawainya->set_where($where);
                  $this->pegawainya->values=$val;
                  $this->pegawainya->update();*/
-                redirect('/org');
+                
+                //  redirect('/org');  
             }
         }
     }
