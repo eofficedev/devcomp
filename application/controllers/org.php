@@ -96,83 +96,97 @@ class Org extends CI_Controller
         $this->form_validation->set_rules("org_email", "Fax", "trim|required|valid_email");
         $this->form_validation->set_rules("org_postal_code", "Postal Code", "trim|required");
 
-        $this->load->model("notadinas/database", "jobnya", true);
-        $this->jobnya->set_table("hrms_job");
-        $this->jobnya->set_order("job_num asc");
-        $where = array();
-        $where["job_id"] = $this->input->post("job_id");
-        $this->jobnya->set_where($where);
-        if (count($this->jobnya->tampil())>0 and $this->input->post("konfia")!="Buat sendiri") {
-        } else {
-            $this->form_validation->set_rules("job_name", "Nama Jabatan", "trim|required");
-            $this->form_validation->set_rules("job_code", "Kode Jabatan", "trim|required|min_length[3]|max_length[5]");
-            $this->form_validation->set_rules("job_description", "Deskripsi Jabatan", "trim|required");
-            $this->form_validation->set_rules("job_id", "Jabatan ID", "callback_cekJobId|required");
-        }
-        $this->load->model("notadinas/database", "jobnya", true);
-        $this->jobnya->set_table("hrms_job");
-        $this->jobnya->set_order("job_num asc");
-        $where = array();
-        $where["job_id"] = $this->input->post("job_id_hr");
-        $this->jobnya->set_where($where);
-        if (count($this->jobnya->tampil())>0 and $this->input->post("konhr")!="Buat sendiri") {
-        } else {
-            $this->form_validation->set_rules("job_name_hr", "Nama Jabatan", "trim|required");
-            $this->form_validation->set_rules("job_code_hr", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
-            $this->form_validation->set_rules("job_description_hr", "Deskripsi Jabatan", "trim|required");
-            $this->form_validation->set_rules("job_id_hr", "Jabatan ID", "callback_cekJobId|required");
-        }
-        $this->form_validation->set_rules("job_name_kepala", "Nama Jabatan", "trim|required");
-        $this->form_validation->set_rules("job_code_kepala", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
-        $this->form_validation->set_rules("job_description_kepala", "Deskripsi Jabatan", "trim|required");
-        $this->form_validation->set_rules("job_id_kepala", "Jabatan ID", "callback_cekJobId|required");
+        // $this->load->model("notadinas/database", "jobnya", true);
+        // $this->jobnya->set_table("hrms_job");
+        // $this->jobnya->set_order("job_num asc");
+        // $where = array();
+        // $where["job_id"] = $this->input->post("job_id");
+        // $this->jobnya->set_where($where);
+        // if (count($this->jobnya->tampil())>0 and $this->input->post("konfia")!="Buat sendiri") {
+        // } else {
+        //     $this->form_validation->set_rules("job_name", "Nama Jabatan", "trim|required");
+        //     $this->form_validation->set_rules("job_code", "Kode Jabatan", "trim|required|min_length[3]|max_length[5]");
+        //     $this->form_validation->set_rules("job_description", "Deskripsi Jabatan", "trim|required");
+        //     $this->form_validation->set_rules("job_id", "Jabatan ID", "callback_cekJobId|required");
+        // }
+
+        // $this->load->model("notadinas/database", "jobnya", true);
+        // $this->jobnya->set_table("hrms_job");
+        // $this->jobnya->set_order("job_num asc");
+        // $where = array();
+        // $where["job_id"] = $this->input->post("job_id_hr");
+        // $this->jobnya->set_where($where);
+        // if (count($this->jobnya->tampil())>0 and $this->input->post("konhr")!="Buat sendiri") {
+        // } else {
+        //     $this->form_validation->set_rules("job_name_hr", "Nama Jabatan", "trim|required");
+        //     $this->form_validation->set_rules("job_code_hr", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
+        //     $this->form_validation->set_rules("job_description_hr", "Deskripsi Jabatan", "trim|required");
+        //     $this->form_validation->set_rules("job_id_hr", "Jabatan ID", "callback_cekJobId|required");
+        // }
+        // $this->form_validation->set_rules("job_name_kepala", "Nama Jabatan", "trim|required");
+        // $this->form_validation->set_rules("job_code_kepala", "Kode Jabatan", "trim|required|min_length[2]|max_length[5]");
+        // $this->form_validation->set_rules("job_description_kepala", "Deskripsi Jabatan", "trim|required");
+        // $this->form_validation->set_rules("job_id_kepala", "Jabatan ID", "callback_cekJobId|required");
+        
         if ($this->form_validation->run() != false) {
-            $this->load->model('organization');
-            $q = $this->organization->add_org();
+            // $this->load->model('organization');
+            // $q = $this->organization->add_org();
+
+            $org_model = array(
+                'org_id'=> $this->input->post('org_id'),
+                'org_name'=>$this->input->post('org_name'),
+                'org_code'=>$this->input->post('org_code'),
+                'org_address'=>$this->input->post('org_address'),
+                'org_email'=>$this->input->post('org_email'),
+                'org_work_telp'=>$this->input->post('org_work_telp'),
+                'org_fax'=>$this->input->post('org_fax'),
+                'org_postal_code'=>$this->input->post('org_postal_code')
+            );
+            $q = $this->organization_service->add_organization($org_model);
             if ($q) {
-                $where = array();
-                $where["org_id"]=$this->input->post('org_id');
-                $this->load->model("notadinas/database", "organisasinya", true);
-                $this->organisasinya->set_table("hrms_organization");
-                $this->organisasinya->set_order("org_id asc");
-                $this->organisasinya->set_where($where);
-                $organisasinya=$this->organisasinya->tampil();
-                if ($this->input->post("konhr")=="Buat sendiri") {
-                    $val["org_num"]=$organisasinya[0]->org_num;
-                    $this->data['status'] = "Organisasi Berhasil Ditambah";
-                    $where = array();
-                    $val["job_id"] = $this->input->post("job_id_hr");
-                    $val["job_name"] = $this->input->post("job_name_hr");
-                    $val["job_code"] = $this->input->post("job_code_hr");
-                    $val["job_description"] = $this->input->post("job_description_hr");
-                    $this->jobnya->values = $val;
-                    $this->jobnya->simpan();
-                }
-                $where = array();
-                $where["job_id"]=$this->input->post("job_id_hr");
-                $this->jobnya->set_where($where);
-                $jobnya = $this->jobnya->tampil()[0];
-                $where=array();
-                $val=array();
+                // $where = array();
+                // $where["org_id"]=$this->input->post('org_id');
+                // $this->load->model("notadinas/database", "organisasinya", true);
+                // $this->organisasinya->set_table("hrms_organization");
+                // $this->organisasinya->set_order("org_id asc");
+                // $this->organisasinya->set_where($where);
+                // $organisasinya=$this->organisasinya->tampil();
+                // if ($this->input->post("konhr")=="Buat sendiri") {
+                //     $val["org_num"]=$organisasinya[0]->org_num;
+                //     $this->data['status'] = "Organisasi Berhasil Ditambah";
+                //     $where = array();
+                //     $val["job_id"] = $this->input->post("job_id_hr");
+                //     $val["job_name"] = $this->input->post("job_name_hr");
+                //     $val["job_code"] = $this->input->post("job_code_hr");
+                //     $val["job_description"] = $this->input->post("job_description_hr");
+                //     $this->jobnya->values = $val;
+                //     $this->jobnya->simpan();
+                // }
+                // $where = array();
+                // $where["job_id"]=$this->input->post("job_id_hr");
+                // $this->jobnya->set_where($where);
+                // $jobnya = $this->jobnya->tampil()[0];
+                // $where=array();
+                // $val=array();
 
-                $valu["hr_job_num"]=$jobnya->job_num;
+                // $valu["hr_job_num"]=$jobnya->job_num;
                 
-                $val["job_id"] = $this->input->post("job_id_kepala");
-                $val["job_name"] = $this->input->post("job_name_kepala");
-                $val["job_code"] = $this->input->post("job_code_kepala");
-                $val["job_description"] = $this->input->post("job_description_kepala");
-                $val["org_num"]=$organisasinya[0]->org_num;
-                $this->jobnya->values = $val;
-                $this->jobnya->simpan();
+                // $val["job_id"] = $this->input->post("job_id_kepala");
+                // $val["job_name"] = $this->input->post("job_name_kepala");
+                // $val["job_code"] = $this->input->post("job_code_kepala");
+                // $val["job_description"] = $this->input->post("job_description_kepala");
+                // $val["org_num"]=$organisasinya[0]->org_num;
+                // $this->jobnya->values = $val;
+                // $this->jobnya->simpan();
 
-                $where["job_id"]=$this->input->post("job_id_kepala");
-                $this->jobnya->set_where($where);
-                $jobnya = $this->jobnya->tampil()[0];
-                $valu["kepala_job_num"]=$jobnya->job_num;
+                // $where["job_id"]=$this->input->post("job_id_kepala");
+                // $this->jobnya->set_where($where);
+                // $jobnya = $this->jobnya->tampil()[0];
+                // $valu["kepala_job_num"]=$jobnya->job_num;
                 
-                $this->organisasinya->values=$valu;
-                $this->organisasinya->update();
-                redirect('/org');
+                // $this->organisasinya->values=$valu;
+                // $this->organisasinya->update();
+                // redirect('/org');
             }
         } else {
             $this->add_org();
@@ -314,10 +328,10 @@ class Org extends CI_Controller
             );
             $q = $this->organization_service->upd_organization($org_model);
             // var_dump($org_model);
-            var_dump($q);
+            // var_dump($q);
 
             if ($q) {
-                // redirect('/org');  
+                redirect('/org');
 
                 // $this->load->model("notadinas/database", "organisasinya", true);
                 // $this->organisasinya->set_table("hrms_organization");
