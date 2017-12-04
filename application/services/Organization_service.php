@@ -51,4 +51,14 @@ class Organization_service
         $response = Requests::post($uri, $headers, json_encode($model));
         return json_decode($response->body);
     }
+
+    public function delete_organization($model){
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+        $uri = $this->CI->config->item('eoffice_base_url') . '/organizations/delete';
+        $headers = array('Content-Type' => 'application/json');
+        $response = Requests::post($uri, $headers, json_encode($model));
+        return json_decode($response->body);
+    }
 }

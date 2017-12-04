@@ -143,6 +143,7 @@ class Org extends CI_Controller
                 'org_postal_code'=>$this->input->post('org_postal_code')
             );
             $q = $this->organization_service->add_organization($org_model);
+
             if ($q) {
                 // $where = array();
                 // $where["org_id"]=$this->input->post('org_id');
@@ -186,7 +187,7 @@ class Org extends CI_Controller
                 
                 // $this->organisasinya->values=$valu;
                 // $this->organisasinya->update();
-                // redirect('/org');
+                redirect('/org');
             }
         } else {
             $this->add_org();
@@ -402,10 +403,19 @@ class Org extends CI_Controller
     
     public function hapus_org($orgnum)
     {
-        $this->load->model('organization');
-        $q = $this->organization->delete_org($orgnum);
+        // $this->load->model('organization');
+        // $q = $this->organization->delete_org($orgnum);
+        $param = array(
+            'org_num'=> $orgnum,
+        );
 
+        $q = $this->organization_service->delete_organization($param);
+        
         if ($q) {
+            if(strpos($q, 'Error @') == true) {
+                var_dump($q);
+                return;
+            }
             redirect('/org');
         }
     }
