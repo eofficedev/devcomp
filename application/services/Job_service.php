@@ -21,6 +21,16 @@ class Job_service
         return json_decode($response->body);
     }
 
+    public function get_byorgnum_job($orgnum)
+    {
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+        $uri = $this->CI->config->item('eoffice_base_url') . '/jobs/byorgnum?orgnum='. $orgnum;
+        $response = Requests::get($uri);
+        return json_decode($response->body);
+    }
+
     public function get_all_job($filter, $keyword)
     {
         if ($this->CI == null) {

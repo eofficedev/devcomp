@@ -8,6 +8,10 @@ class Emp extends CI_Controller
         if ($this->session->userdata('username')=="") {
             die('Forbidden Access');
         }
+        $this->load->helper("class");
+        load_ci_class(APPPATH . 'services/Employee_service');
+        load_ci_class(APPPATH . 'services/Organization_service');
+        load_ci_class(APPPATH . 'services/Job_service');
     }
 
     public function index($id = null)
@@ -24,9 +28,10 @@ class Emp extends CI_Controller
 //        $config['num_links'] = 4;
 //        $this->pagination->initialize($config);
         
-        $data['employees'] = $this->employee->get_all_emp();
-
+        // $data['employees'] = $this->employee->get_all_emp();
+        $data['employees'] = $this->employee_service->get_all_emp('','');
         $username = $this->session->userdata('username');
+        // $data['result'] = $this->employee->get_detail_emp($username);
         $data['result'] = $this->employee->get_detail_emp($username);
         $data['app_config'] = $this->admin_config->load_app_config();
         $this->load->view('includes/home_template', $data);
@@ -36,19 +41,27 @@ class Emp extends CI_Controller
     {
         $res = $this->get_session();
         $data['result'] = $res['result'];
-        $this->load->model("absensi/database", "pegawai", true);
-        $this->pegawai->set_table("hrms_employees");
-        $this->pegawai->set_table("hrms_employees");
-        $data["countEmployee"] = $this->pegawai->count();
+        // $this->load->model("absensi/database", "pegawai", true);
+        // $this->pegawai->set_table("hrms_employees");
+        // $this->pegawai->set_table("hrms_employees");
+        $emp = $this->employee_service->get_all_emp('','');
+        // $data["countEmployee"] = $this->pegawai->count();
+        $data["countEmployee"] = count($emp);
         
-        $this->load->model('job');
-        $data['jobs'] = $this->job->get_all_job();
-        $data['job_curr'] = $this->job->load_curr_num();
-        $this->load->model('employee');
-        $data['emp_curr_num'] = $this->employee->load_curr_num();
+        // $this->load->model('job');
+        // $data['jobs'] = $this->job->get_all_job();
+        // $data['job_curr'] = $this->job->load_curr_num();
+        $job = $this->job_service->get_all_job('', '');
+        var_dump($job);
+        $data['jobs'] = $job;
+        $data['job_curr'] = 0; //$this->job->load_curr_num();
 
-        $this->load->model('organization');
-        $data['org'] = $this->organization->get_all_org();
+        // $this->load->model('employee');
+        $data['emp_curr_num'] = 0; //$this->employee->load_curr_num();
+
+        // $this->load->model('organization');
+        // $data['org'] = $this->organization->get_all_org();
+        $data['org'] = $this->organization_service->get_all_org('','');
 
         $data['title'] = 'Add New Employee';
         $data['mid_content'] = 'content/employee/add_employee';

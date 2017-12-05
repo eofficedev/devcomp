@@ -202,9 +202,11 @@ class Jobs extends CI_Controller
 
     public function load_job()
     {
-        $this->load->model('job');
-        $q = $this->job->list_job_by_org();
-        echo $q;
+        // $this->load->model('job');
+        // $q = $this->job->list_job_by_org();
+        $orgnum = $this->input->post('org');
+        $q = $this->job_service->get_byorgnum_job($orgnum);
+        echo json_encode($q);
     }
 
     /*

@@ -396,7 +396,7 @@ class Org extends CI_Controller
                  $this->pegawainya->values=$val;
                  $this->pegawainya->update();*/
                 
-                //  redirect('/org');  
+                //  redirect('/org');
             }
         }
     }
@@ -412,8 +412,8 @@ class Org extends CI_Controller
         $q = $this->organization_service->delete_organization($param);
         
         if ($q) {
-            if(strpos($q, 'Error @') == true) {
-                var_dump($q);
+            if (strpos($q, 'Error @') == true) {
+                redirect('/org');
                 return;
             }
             redirect('/org');
