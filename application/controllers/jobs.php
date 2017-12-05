@@ -132,12 +132,14 @@ class Jobs extends CI_Controller
         $get = $this->uri->uri_to_assoc();
         $data['id'] = $get['id'];
         $this->load->model('job');
-        $data['job_data'] = $this->job->get_job_data($data['id']);
-
+        //$data['job_data'] = $this->job->get_job_data($data['id']);
+        $data['job_data'] = $this->job_service->get_byid_job($data['id']);
+        
         $res = $this->get_session();
         $data['result'] = $res['result'];
         $this->load->model('organization');
-        $data['org'] = $this->organization->get_all_org();
+        //$data['org'] = $this->organization->get_all_org();
+        $data['org'] = $this->organization_service->get_all_org(null, null);
         $data['title'] = 'Update Job';
         $data['mid_content'] = 'content/job/update_job';
         $data['app_config'] = $this->admin_config->load_app_config();
@@ -147,7 +149,6 @@ class Jobs extends CI_Controller
     /*
      * Function untuk mengupdate perubahan dari data job
      */
-
     public function process_update()
     {
         $this->form_validation->set_rules('job_name', 'Job Name', 'trim|required');
@@ -156,8 +157,23 @@ class Jobs extends CI_Controller
         $this->form_validation->set_rules('org', 'Organization', 'trim|required');
 
         if ($this->form_validation->run() != false) {
-            $this->load->model('job');
-            $q = $this->job->upd_job();
+            // $this->load->model('job');
+            // $q = $this->job->upd_job();
+
+            $job_model = array(
+                'job_num' => $this->input->post('job_num'),
+                'job_id' => $this->input->post('job_id'),
+                'job_name' => $this->input->post('job_name'),
+                'job_description' => $this->input->post('job_description'),
+                'job_code' => $this->input->post('job_code'),
+                'org_num' => $this->input->post('organization')
+            );
+
+            $q = $this->job_service->upd_job($job_model);
+
+            // var_dump($job_model);
+            // var_dump($q);
+            // return;
 
             if ($q) {
                 redirect('/jobs');

@@ -45,13 +45,14 @@ $('document').ready(function(){
                 <td>ID Jabatan</td>
                 <td> : </td>
                     <td><?php 
-                    $row = $job_data->row();
-                $data = array(
-                    'name'=>'job_id',
-                    'size'=>'15',
-                    'readonly'=>'readonly',
-                    'value'=> $row->job_id
-                );
+                    //$row = $job_data->row();
+                    $row = $job_data[0];
+                    $data = array(
+                        'name'=>'job_id',
+                        'size'=>'15',
+                        'readonly'=>'readonly',
+                        'value'=> $row->job_id
+                    );
                 
                 echo form_input($data);
                 ?></td>
@@ -110,7 +111,8 @@ $('document').ready(function(){
                 <td><select name="org" id="list_org">
                         <option value="">--Pilih--</option>
                         <?php
-                        foreach($org->result() as $rowOrg){
+                        //foreach($org->result() as $rowOrg){
+                            foreach($org as $rowOrg){
                             
                             ?>
                         <option value="<?php echo $rowOrg->org_num; ?>" <?php
