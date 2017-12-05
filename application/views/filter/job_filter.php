@@ -22,7 +22,8 @@
                     '' => '--All Organization--'
                 );
 
-                foreach ($list_org->result() as $row) {
+                // foreach ($list_org->result() as $row) {
+                foreach ($list_org as $row) {
                     $options[$row->org_num] = $row->org_name;
                 }
                 

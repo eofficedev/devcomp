@@ -1,21 +1,29 @@
 <?php
 
-class Jobs extends CI_Controller {
-
-    public function __construct() {
+class Jobs extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
-        if ($this->session->userdata('username') == "")
+        if ($this->session->userdata('username') == "") {
             die('Forbidden Access');
+        }
+        $this->load->helper("class");
+        load_ci_class(APPPATH . 'services/Organization_service');
+        load_ci_class(APPPATH . 'services/Job_service');
     }
 
-    function index() {
+    public function index()
+    {
         $this->load->model('employee');
         $this->load->model('job');
         $username = $this->session->userdata('username');
 
         $this->load->model('organization');
-        $data['job'] = $this->job->get_all_job();
-        $data['list_org'] = $this->organization->get_all_org();
+        // $data['job'] = $this->job->get_all_job();
+        // $data['list_org'] = $this->organization->get_all_org();
+        $data['job'] = $this->job_service->get_all_job($this->input->post('filter'), $this->input->post('keyword'));
+        $data['list_org'] = $this->organization_service->get_all_org(null, null);
 
         $data['result'] = $this->employee->get_detail_emp($username);
         $data['app_config'] = $this->admin_config->load_app_config();
@@ -29,16 +37,16 @@ class Jobs extends CI_Controller {
      * Untuk menampilkan form untuk add job baru
      */
 
-    function form_job() {
+    public function form_job()
+    {
         $res = $this->get_session();
         $data['result'] = $res['result'];
         $data['title'] = 'Add Job';
-        $this->load->model('organization');
-
-        $this->load->model('job');
-        $data['job_curr_num'] = $this->job->load_curr_num();
-
-        $data['org'] = $this->organization->get_all_org();
+        // $this->load->model('organization');
+        // $this->load->model('job');
+        // $data['job_curr_num'] = $this->job->load_curr_num();
+        // $data['org'] = $this->organization->get_all_org();
+        $data['org'] =  $this->organization_service->get_all_org(null, null);
         $data['app_config'] = $this->admin_config->load_app_config();
         $data['mid_content'] = 'content/job/add_job';
         $this->load->view('includes/home_template', $data);
@@ -48,7 +56,8 @@ class Jobs extends CI_Controller {
      * untuk memperoleh username dari session yang sedang aktif
      */
 
-    function get_session() {
+    public function get_session()
+    {
         $this->load->model('employee');
         $username = $this->session->userdata('username');
         $data['result'] = $this->employee->get_detail_emp($username);
@@ -59,31 +68,42 @@ class Jobs extends CI_Controller {
     /*
      * Untuk memproses add job
      */
- function cekJobId($id){
-        $this->load->model('notadinas/database',"jobnya",true);
+    public function cekJobId($id)
+    {
+        $this->load->model('notadinas/database', "jobnya", true);
         $this->jobnya->set_table("hrms_job");
         $this->jobnya->set_order("job_num desc");
         $where["job_id"]=$id;
         $this->jobnya->set_where($where);
         $jobDet = $this->jobnya->tampil();
-        if(count($jobDet)>0){
+        if (count($jobDet)>0) {
             $this->form_validation->set_message('cekJobId', 'The %s is already exsist');
-            return FALSE;
+            return false;
+        } else {
+            return true;
         }
-        else
-            return TRUE;
     }
-    function process_add() {
-
+    public function process_add()
+    {
         $this->form_validation->set_rules('job_name', 'Job Name', 'trim|required');
         $this->form_validation->set_rules('job_id', 'Job Name', 'trim|required|callback_cekJobId');
         $this->form_validation->set_rules('job_code', 'Job Code', 'trim|required');
         $this->form_validation->set_rules('job_description', 'Job Description', 'trim|required');
         $this->form_validation->set_rules('organization', 'Organization', 'trim|required');
 
-        if ($this->form_validation->run() != FALSE) {
-            $this->load->model('job');
-            $q = $this->job->add_job();
+        if ($this->form_validation->run() != false) {
+            // $this->load->model('job');
+            // $q = $this->job->add_job();
+
+            $job_model = array(
+                'job_id' => $this->input->post('job_id'),
+                'job_name' => $this->input->post('job_name'),
+                'job_description' => $this->input->post('job_description'),
+                'job_code' => $this->input->post('job_code'),
+                'org_num' => $this->input->post('organization')
+            );
+
+            $q = $this->job_service->add_job($job_model);
 
             if ($q) {
                 redirect('/jobs');
@@ -93,7 +113,8 @@ class Jobs extends CI_Controller {
         }
     }
 
-    function process_add_ajax() {
+    public function process_add_ajax()
+    {
         $this->load->model('job');
         $q = $this->job->add_job_ajax();
 
@@ -106,7 +127,8 @@ class Jobs extends CI_Controller {
      * Function untuk memproses update job
      */
 
-    function upd() {
+    public function upd()
+    {
         $get = $this->uri->uri_to_assoc();
         $data['id'] = $get['id'];
         $this->load->model('job');
@@ -126,14 +148,14 @@ class Jobs extends CI_Controller {
      * Function untuk mengupdate perubahan dari data job
      */
 
-    function process_update() {
-
+    public function process_update()
+    {
         $this->form_validation->set_rules('job_name', 'Job Name', 'trim|required');
         $this->form_validation->set_rules('job_code', 'Job Code', 'trim|required');
         $this->form_validation->set_rules('job_description', 'Job Description', 'trim|required');
         $this->form_validation->set_rules('org', 'Organization', 'trim|required');
 
-        if ($this->form_validation->run() != FALSE) {
+        if ($this->form_validation->run() != false) {
             $this->load->model('job');
             $q = $this->job->upd_job();
 
@@ -160,7 +182,8 @@ class Jobs extends CI_Controller {
      * Function untuk menampilkan list job berdasarkan organisasi masing-masing
      */
 
-    function load_job() {
+    public function load_job()
+    {
         $this->load->model('job');
         $q = $this->job->list_job_by_org();
         echo $q;
@@ -170,13 +193,15 @@ class Jobs extends CI_Controller {
      * Function untuk menampilkan manager dari setiap job
      */
 
-    function load_mgr() {
+    public function load_mgr()
+    {
         $this->load->model('job');
         $q = $this->job->get_mgr_detail();
         echo $q;
     }
 
-    function pilih_employee() {
+    public function pilih_employee()
+    {
         $get = $this->uri->uri_to_assoc();
         $id = $get['id'];
         $this->load->model('employee');
@@ -187,7 +212,8 @@ class Jobs extends CI_Controller {
         $this->load->view('content/job/pilih_employee', $data);
     }
 
-    function get_web_page() {
+    public function get_web_page()
+    {
         $this->load->model('reservation_model');
         $q = (array) $this->reservation_model->get_web_page();
 
@@ -196,7 +222,8 @@ class Jobs extends CI_Controller {
         }
     }
 
-    function get_web_page_2() {
+    public function get_web_page_2()
+    {
         $this->load->model('reservation_model');
         $q = (array) $this->reservation_model->get_web_page_2();
 
@@ -205,7 +232,8 @@ class Jobs extends CI_Controller {
         }
     }
 
-    function hapus_job($jobid) {
+    public function hapus_job($jobid)
+    {
         $this->load->model('job');
         $q = $this->job->delete_job($jobid);
         if ($q) {
@@ -225,5 +253,4 @@ class Jobs extends CI_Controller {
             $this->load->view('includes/home_template', $data);
         }
     }
-
 }

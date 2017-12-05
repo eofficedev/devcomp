@@ -111,7 +111,8 @@
                 <td><select name="organization" id="list_org">
                         <option value="">--Pilih Organization--</option>
                         <?php
-                            foreach($org->result() as $row){
+                            // foreach($org->result() as $row){
+                            foreach($org as $row){
                                 
                                 ?>
                         <option value="<?php echo $row->org_num; ?>"><?php echo $row->org_name; ?></option>

@@ -47,15 +47,18 @@
         <th>Organisasi</th>
         </thead>
         <?php
-        foreach ($job->result() as $row) {
-            ?>
-            <tr class="emp-data">
-                <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php echo $row->job_id; ?></a></td>
-                <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php echo $row->job_name; ?></a></td>
-                <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php echo $row->job_description; ?></a></td>
-                <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php echo $row->org_name; ?></a></td>
-            </tr>
-            <?php
+        // foreach ($job->result() as $row) {
+        if($job != null){
+            foreach ($job as $row) {
+                ?>
+                <tr class="emp-data">
+                    <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php echo $row->job_id; ?></a></td>
+                    <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php echo $row->job_name; ?></a></td>
+                    <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php echo $row->job_description; ?></a></td>
+                    <td style="padding-left: 10px;"><a href="jobs/upd/id/<?php echo $row->job_num; ?>"><?php // echo $row->org_name; ?></a></td>
+                </tr>
+                <?php
+            }
         }
         ?>
 
