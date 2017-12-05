@@ -252,23 +252,38 @@ class Jobs extends CI_Controller
 
     public function hapus_job($jobid)
     {
-        $this->load->model('job');
-        $q = $this->job->delete_job($jobid);
+        // $this->load->model('job');
+        // $q = $this->job->delete_job($jobid);
+
+        $param = array(
+            'job_num'=> $jobid,
+        );
+
+        $q = $this->job_service->delete_job($param);
+
         if ($q) {
-            $this->load->model('employee');
-            $this->load->model('job');
-            $username = $this->session->userdata('username');
-
-            $this->load->model('organization');
-            $data['job'] = $this->job->get_all_job();
-            $data['list_org'] = $this->organization->get_all_org();
-            $data['status'] = "Jabatan berhasil dihapus";
-            $data['result'] = $this->employee->get_detail_emp($username);
-            $data['app_config'] = $this->admin_config->load_app_config();
-            $data['title'] = 'Jobs';
-
-            $data['mid_content'] = 'content/job/list_job';
-            $this->load->view('includes/home_template', $data);
+            if(strpos($q, 'Error @') == true) {
+                var_dump($q);
+                return;
+            }
+            redirect('/jobs');
         }
+
+        // if ($q) {
+        //     $this->load->model('employee');
+        //     $this->load->model('job');
+        //     $username = $this->session->userdata('username');
+
+        //     $this->load->model('organization');
+        //     $data['job'] = $this->job->get_all_job();
+        //     $data['list_org'] = $this->organization->get_all_org();
+        //     $data['status'] = "Jabatan berhasil dihapus";
+        //     $data['result'] = $this->employee->get_detail_emp($username);
+        //     $data['app_config'] = $this->admin_config->load_app_config();
+        //     $data['title'] = 'Jobs';
+
+        //     $data['mid_content'] = 'content/job/list_job';
+        //     $this->load->view('includes/home_template', $data);
+        // }
     }
 }

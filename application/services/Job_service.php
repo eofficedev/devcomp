@@ -54,4 +54,23 @@ class Job_service
         $response = Requests::put($uri, $headers, json_encode($model));
         return json_decode($response->body);
     }
+
+    public function delete_job($param)
+    {
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+
+        $jobnum = $param['job_num'];
+        $job = $this->get_byid_job($jobnum);
+
+        if($job == null) return null;
+
+        $param['org_num'] = $job[0]->org_num;
+
+        $uri = $this->CI->config->item('eoffice_base_url') . '/jobs/delete';
+        $headers = array('Content-Type' => 'application/json');
+        $response = Requests::post($uri, $headers, json_encode($param));
+        return json_decode($response->body);
+    }
 }
