@@ -180,13 +180,15 @@ class Jobs extends CI_Controller
             }
         } else {
             $data['id'] = $this->input->post('job_num');
-            $this->load->model('job');
-            $data['job_data'] = $this->job->get_job_data($data['id']);
+            // $this->load->model('job');
+            // $data['job_data'] = $this->job->get_job_data($data['id']);
+            $data['job_data'] = $this->job_service->get_byid_job($data['id']);
 
             $res = $this->get_session();
             $data['result'] = $res['result'];
-            $this->load->model('organization');
-            $data['org'] = $this->organization->get_all_org();
+            // $this->load->model('organization');
+            // $data['org'] = $this->organization->get_all_org();
+            $data['org'] = $this->organization_service->get_all_org(null, null);
             $data['title'] = 'Update Job';
             $data['mid_content'] = 'content/job/update_job';
             $data['app_config'] = $this->admin_config->load_app_config();
