@@ -68,7 +68,7 @@
                 </tr>
                 <tr>
                     <td>Sub Organisasi dari</td>
-                    <td> : <select name="org_sub" id="orgsub">
+                    <td> : <select name="org_parent" id="orgsub">
                             <option value="">--Tidak Ada--</option>
                             <?php
                             // foreach ($all_org->result() as $row2) {

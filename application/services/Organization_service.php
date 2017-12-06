@@ -83,6 +83,8 @@ class Organization_service
         $uri = $this->CI->config->item('eoffice_base_url') . '/organizations/delete';
         $headers = array('Content-Type' => 'application/json');
         $response = Requests::post($uri, $headers, json_encode($param));
+        print_r(json_encode($param));
+        print_r($uri);
         return json_decode($response->body);
     }
 }

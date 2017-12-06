@@ -328,7 +328,8 @@ class Org extends CI_Controller
                 'org_email'=>$this->input->post('org_email'),
                 'org_work_telp'=>$this->input->post('org_work_telp'),
                 'org_fax'=>$this->input->post('org_fax'),
-                'org_postal_code'=>$this->input->post('org_postal_code')
+                'org_parent'=>$this->input->post('org_parent'),
+                'org_parent'=>$this->input->post('org_parent')
             );
             $q = $this->organization_service->upd_organization($org_model);
             // var_dump($org_model);
@@ -413,8 +414,8 @@ class Org extends CI_Controller
         );
 
         $q = $this->organization_service->delete_organization($param);
-        
-        if ($q) {
+
+        if ($q != null) {
             if (strpos($q, 'Error @') == true) {
                 redirect('/org');
                 return;
