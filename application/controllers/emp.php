@@ -52,7 +52,7 @@ class Emp extends CI_Controller
         // $data['jobs'] = $this->job->get_all_job();
         // $data['job_curr'] = $this->job->load_curr_num();
         $job = $this->job_service->get_all_job('', '');
-        var_dump($job);
+        // var_dump($job);
         $data['jobs'] = $job;
         $data['job_curr'] = 0; //$this->job->load_curr_num();
 
@@ -118,7 +118,7 @@ class Emp extends CI_Controller
             );
     
             $q = $this->employee_service->add_employee($emp_model);
-            var_dump($q); return;
+            // var_dump($q); return;
 
             if ($q) {
                 redirect('emp');

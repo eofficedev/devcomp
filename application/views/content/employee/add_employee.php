@@ -182,7 +182,8 @@
 
 <div id="content">
     <?php 
-        if($countEmployee-2 == $app_config->result_object[0]->maxUsers){
+        if(false){
+        //if($countEmployee-2 == $app_config->result_object[0]->maxUsers){
             echo "<h2>Jumlah data pegawai untuk versi eOffice Anda telah mencapai batas, silahkan update ke versi Premium</h2>";
         }
         else{

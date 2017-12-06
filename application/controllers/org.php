@@ -48,8 +48,8 @@ class Org extends CI_Controller
         $this->load->model('job');
         //   $this->data['curr_num'] = $this->organization->load_curr_num();
         //  $this->data['job_curr'] = $this->job->load_curr_num();
-        $this->data['org'] = $this->organization->get_all_org_name();
-
+        //$this->data['org'] = $this->organization->get_all_org_name();
+        $this->data['org'] = $this->organization_service->get_all_org('','');
         $this->data['mid_content'] = 'content/organization/add_org';
         $this->load->view('includes/home_template', $this->data);
     }
@@ -416,8 +416,8 @@ class Org extends CI_Controller
         $q = $this->organization_service->delete_organization($param);
 
         if ($q != null) {
-            if (strpos($q, 'Error @') == true) {
-                redirect('/org');
+            if (strpos($q, 'Error @') == 0 || $q != true) {
+                var_dump($q);
                 return;
             }
             redirect('/org');

@@ -57,9 +57,10 @@
                 <td> : <select name="org_sub" id="orgsub">
                         <option value="">--Tidak Ada--</option>
                         <?php 
-                            foreach($org->result() as $row){
-                                
-                                ?>
+                            //foreach($org->result() as $row){
+                            foreach($org as $row){
+                            
+                            ?>
                         <option value="<?php echo $row->org_num; ?>"><?php echo $row->org_name; ?></option>
                         <?php
                             }
