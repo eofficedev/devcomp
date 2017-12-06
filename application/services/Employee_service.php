@@ -51,11 +51,31 @@ class Employee_service
             throw new Exception('$CI instance not set! Please set it inside constructor.');
         }
 
-        print_r(json_encode($model)); return;
-
         $uri = $this->CI->config->item('eoffice_base_url') . '/employees';
         $headers = array('Content-Type' => 'application/json');
         $response = Requests::post($uri, $headers, json_encode($model));
+        return json_decode($response->body);
+    }
+
+    public function update_employee($model){
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+
+        $uri = $this->CI->config->item('eoffice_base_url') . '/employees';
+        $headers = array('Content-Type' => 'application/json');
+        $response = Requests::put($uri, $headers, json_encode($model));
+        return json_decode($response->body);
+    }
+
+    public function delete_employee($param){
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+
+        $uri = $this->CI->config->item('eoffice_base_url') . '/employees/delete';
+        $headers = array('Content-Type' => 'application/json');
+        $response = Requests::post($uri, $headers, json_encode($param));
         return json_decode($response->body);
     }
 }

@@ -160,7 +160,7 @@
                 <td>Email</td>
                 <td> : <?php
                     $data = array(
-                        'name' => ' ',
+                        'name' => 'emp_email',
                         'size' => '35',
                         'value' => $row->emp_email
                     );
@@ -234,7 +234,8 @@
                     $row4 = $user_data;
 
                     $data = array(
-                        'name' => 'username',
+                        // 'name' => 'username',
+                        'name' => 'email_username',
                         'size' => '30',
                         'value' => $row4->emp_username
                     );
@@ -242,21 +243,28 @@
                     echo form_input($data);
                     ?>
                 </td>
-                <td class="error-msg"><?php echo form_error('username'); ?></td>
+                <td class="error-msg"><?php 
+                    //echo form_error('username'); 
+                    echo form_error('email_username'); 
+                ?></td>
             </tr>
             <tr>
                 <td>Sandi</td>
                 <td> : 
                     <?php
                     $data = array(
-                        'name' => 'password',
+                        // 'name' => 'password',
+                        'name' => 'email_password',
                         'size' => '30'
                     );
 
                     echo form_password($data);
                     ?>
                 </td>
-                <td class="error-msg"><?php echo form_error('password'); ?></td>
+                <td class="error-msg"><?php 
+                    //echo form_error('password'); 
+                    echo form_error('email_password'); 
+                ?></td>
             </tr>
             <tr>
                 <td>Ketik Ulang Sandi</td>
@@ -274,44 +282,44 @@
 
         </table>
     </fieldset>
-      <fieldset style="border:1px dotted black; margin-top: 10px;">
+      <!-- <fieldset style="border:1px dotted black; margin-top: 10px;">
             <legend>Informasi Email Login</legend>
             <table>
                 <tr>
                     <td>Email Username</td>
                     <td> : 
                         <?php
-                        $data = array(
-                            'name' => 'email_username',
-                            'size' => '30',
-                            // 'value' =>  $row->email_username 
-                            'value' =>  $row->emp_username 
-                        );
+                        // $data = array(
+                        //     'name' => 'email_username',
+                        //     'size' => '30',
+                        //     // 'value' =>  $row->email_username 
+                        //     'value' =>  $row->emp_username 
+                        // );
 
-                        echo form_input($data);
+                        // echo form_input($data);
                         ?>
                     </td>
-                    <td class="error-msg"><?php echo form_error('email_username'); ?></td>
+                    <td class="error-msg"><?php //echo form_error('email_username'); ?></td>
                 </tr>
                 <tr>
                     <td>Email Password</td>
                     <td> : 
                         <?php
-                        $data = array(
-                            'name' => 'email_password',
-                            'size' => '30',
-                            // 'value' => $row->email_password
-                            'value' => $row->emp_password
-                        );
+                        // $data = array(
+                        //     'name' => 'email_password',
+                        //     'size' => '30',
+                        //     // 'value' => $row->email_password
+                        //     'value' => $row->emp_password
+                        // );
 
-                        echo form_password($data);
+                        // echo form_password($data);
                         ?>
                     </td>
-                    <td class="error-msg"><?php echo form_error('email_password'); ?></td>
+                    <td class="error-msg"><?php //echo form_error('email_password'); ?></td>
                 </tr>
 
             </table>
-        </fieldset>
+        </fieldset> -->
     <div style="text-align: center; margin-top: 20px;">
 <?php echo form_submit('simpan', 'Simpan'); ?>
     </div>

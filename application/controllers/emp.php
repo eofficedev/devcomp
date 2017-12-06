@@ -184,8 +184,32 @@ class Emp extends CI_Controller
             $this->form_validation->set_rules('cpassword', 'Confirm Password', 'trim|matches[password]');
         }
         if ($this->form_validation->run() != false) {
-            $this->load->model('employee');
-            $q = $this->employee->update_emp();
+            // $this->load->model('employee');
+            // $q = $this->employee->update_emp();
+
+            $emp_model = array(
+                "emp_num" => $this->input->post('emp_num'),
+                "emp_id" => $this->input->post('emp_id'),
+                "emp_firstname" => $this->input->post('emp_firstname'),
+                "emp_lastname" => $this->input->post('emp_lastname'),
+                "emp_gender" => $this->input->post('gender'),
+                "emp_dob" => $this->input->post("emp_dob"),
+                "emp_street" => $this->input->post("emp_street"),
+                "emp_username" => $this->input->post("email_username"),
+                "emp_password" => $this->input->post("email_password"),
+                "emp_cutah" => "10",
+                "emp_trip" => "10",
+                "emp_cubes" => "10",
+                "emp_email" => $this->input->post("emp_email"),
+                "emp_job" => $this->input->post("emp_job"),
+                // "job_code" => $job_code,
+                // "org_code" => $org_code,
+                // "org_id" => $this->input->post("emp_org")
+            );
+
+            $q = $this->employee_service->update_employee($emp_model);
+
+            // return;
 
             if ($q) {
                 redirect('/emp');
@@ -196,22 +220,31 @@ class Emp extends CI_Controller
             $this->load->model('employee');
             $data['res'] = $this->input->post('emp_num');
 
-            $this->load->model('job');
-            $data['jobs'] = $this->job->get_all_job();
+            // $this->load->model('job');
+            // $data['jobs'] = $this->job->get_all_job();
+            $data['jobs'] = $this->job_service->get_all_job('', '');
 
-            $this->load->model('organization');
-            $data['org'] = $this->organization->get_all_org();
-            $data['employee_data'] = $this->employee->get_emp_data($data['res']);
-            $data['telp'] = $this->employee->get_employee_telp($data['res']);
+            // $this->load->model('organization');
+            // $data['org'] = $this->organization->get_all_org();
+            $data['org'] = $this->organization_service->get_all_org('','');
+            // $data['employee_data'] = $this->employee->get_emp_data($data['res']);
+            $emp_data = $this->employee_service->get_emp_data($data['res']);
+            if(count($emp_data) > 0) $data['employee_data'] = $emp_data[0];
+            else $data['employee_data'] = $emp_data;
+            // $data['telp'] = $this->employee->get_employee_telp($data['res']);
 
             $data['title'] = 'Employee Profile';
             $data['mid_content'] = 'content/employee/update_employee';
             $res = $this->get_session();
 
-            $data['user_data'] = $this->employee->get_user_data($data['res']);
-            $orgid = $data['employee_data']->row()->org_id;
+            // $data['user_data'] = $this->employee->get_user_data($data['res']);
+            $user_data = $this->employee_service->get_user_data($data['res']);
+            if(count($user_data) > 0) $data['user_data'] = $user_data[0];
+            else $data['user_data'] = $user_data;
+            $orgid = 0; //$data['employee_data']->row()->org_id;
 
-            $data['job'] = $this->job->load_job_by_org($orgid);
+            // $data['job'] = $this->job->load_job_by_org($orgid);
+            $data['job'] = $this->job_service->get_byorgnum_job($orgid);
 
             $data['result'] = $res['result'];
             $data['app_config'] = $this->admin_config->load_app_config();
@@ -273,8 +306,14 @@ class Emp extends CI_Controller
     
     public function hapus_emp($empnum)
     {
-        $this->load->model('employee');
-        $q = $this->employee->del_emp($empnum);
+        // $this->load->model('employee');
+        // $q = $this->employee->del_emp($empnum);
+
+        $param = array(
+            'emp_num'=> $empnum,
+        );
+
+        $q = $this->employee_service->delete_employee($param);
         
         if ($q) {
             redirect("emp");
