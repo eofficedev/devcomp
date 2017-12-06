@@ -196,12 +196,14 @@ class Org extends CI_Controller
 
     public function view($pg="id", $id)
     {
-        $this->load->model('organization');
+        // $this->load->model('organization');
         // $this->data['org'] = $this->organization->get_detail_org($id);
         $this->data['org'] = $this->organization_service->get_byid_org($id)[0];
         //$dt = $this->data['org']->row()->org_num;
         $dt = $this->data['org']->org_num;
-        $this->data['all_org'] = $this->organization->get_all_org_name($dt);
+        // $this->data['all_org'] = $this->organization->get_all_org_name($dt);
+        $this->data['all_org'] = $this->organization_service->get_all_org_except($id);
+        
         $this->data['title'] = 'List Organization';
         $this->data['result'] = $this->get_session();
         $this->data['app_config'] = $this->admin_config->load_app_config();
@@ -216,6 +218,7 @@ class Org extends CI_Controller
         // $where["hr_job_num"]=$this->data['org']->row()->hr_job_num;
         $this->organisasi->set_where($where);
         $hr =$this->organisasi->tampil();
+
         $this->load->model("notadinas/database", "jobhr", true);
         $this->jobhr->set_table("hrms_job");
         $this->jobhr->set_order("job_num asc");

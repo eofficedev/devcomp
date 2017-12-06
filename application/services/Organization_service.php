@@ -21,6 +21,29 @@ class Organization_service
         return json_decode($response->body);
     }
 
+    private $selectedId = 0;
+    public function get_all_org_except($id)
+    {
+        $this->selectedId = $id;
+        $result = $this->get_all_org('', '');
+        $filtered = array_filter($result, function($o){
+            return $o->org_num != $this->selectedId;
+        });
+        return $filtered;
+    }
+
+    // public function get_all_org_except($id)
+    // {
+    //     $result = $this->get_all_org('', '');
+    //     $filtered = array();
+    //     foreach($result as $datum){
+    //         if($datum->org_num != $id ){
+    //             array_push($filtered, $datum);
+    //         }
+    //     }
+    //     return $filtered;
+    // }
+
     public function get_byid_org($id)
     {
         if ($this->CI == null) {

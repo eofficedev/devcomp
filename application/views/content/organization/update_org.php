@@ -71,10 +71,18 @@
                     <td> : <select name="org_sub" id="orgsub">
                             <option value="">--Tidak Ada--</option>
                             <?php
-                            foreach ($all_org->result() as $row2) {
+                            // foreach ($all_org->result() as $row2) {
+                                
+                            foreach ($all_org as $row2) {
+                                print_r($row2);
+                                print_r($row);
                                 ?>
-                                <option value="<?php echo $row2->org_num; ?>" <?php if ($row2->org_num == $row->org_parent) {
-                                    echo "selected=\"selected\"";
+                                <option value="<?php echo $row2->org_num; ?>" <?php 
+                                //if ($row2->org_num == $row->org_parent) {
+                                if($row->org_parent != null){
+                                    if ($row2->org_num == $row->org_parent) {
+                                        echo "selected=\"selected\"";
+                                    }
                                 } ?>><?php echo $row2->org_name; ?></option>
                                 <?php
                             }
