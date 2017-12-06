@@ -49,7 +49,8 @@
             <tr>
                 <td>NIK</td>
                 <?php
-                $row = $employee_data->row();
+                // $row = $employee_data->row();
+                $row = $employee_data;
 
 
                 $data = array(
@@ -136,30 +137,30 @@
             </tr>
 
 <?php
-if ($telp->num_rows() > 0) {
-    foreach ($telp->result() as $row2) {
+// if ($telp->num_rows() > 0) {
+//     foreach ($telp->result() as $row2) {
         ?>
                     <tr>
                         <td>Telepon</td>
                         <td> : <?php
-                            $data = array(
-                                'name' => 'telp_no[]',
-                                'size' => '25',
-                                'value' => $row2->telp_no
-                            );
-                            echo form_input($data);
+                            // $data = array(
+                            //     'name' => 'telp_no[]',
+                            //     'size' => '25',
+                            //     'value' => $row2->telp_no
+                            // );
+                            // echo form_input($data);
                             ?></td>
-                        <td class="error-msg"><?php echo form_error('telp_no'); ?></td>
+                        <td class="error-msg"><?php // echo form_error('telp_no'); ?></td>
                     </tr>
         <?php
-    }
-}
+//     }
+// }
 ?>
             <tr>
                 <td>Email</td>
                 <td> : <?php
                     $data = array(
-                        'name' => 'emp_email',
+                        'name' => ' ',
                         'size' => '35',
                         'value' => $row->emp_email
                     );
@@ -183,12 +184,14 @@ if ($telp->num_rows() > 0) {
                 <td>      : <select name="emp_org" id="list-org">
                         <option value="0">--Pilih--</option>
                         <?php
-                        foreach ($org->result() as $row3) {
+                        // foreach ($org->result() as $row3) {
+                        foreach ($org as $row3) {
                             ?>
                             <option value="<?php echo $row3->org_num; ?>" <?php
-                                    if ($row->org_id == $row3->org_num) {
-                                        echo 'selected=selected ';
-                                    }
+                                    // if ($row->org_id == $row3->org_num) {
+                                    // if ($row->org_num == $row3->org_num) {
+                                    //     echo 'selected=selected ';
+                                    // }
                                     ?>><?php echo $row3->org_name; ?></option>
     <?php
 }
@@ -202,7 +205,8 @@ if ($telp->num_rows() > 0) {
                 <td> : <select name="emp_job" id="list-job">
                         <option value="0">--Pilih--</option>
                         <?php
-                        foreach ($job->result() as $row4) {
+                        //foreach ($job->result() as $row4) {
+                        foreach ($job as $row4) {
                             ?>
                             <option value="<?php echo $row4->job_num; ?>" <?php
                                     if ($row->emp_job == $row4->job_num) {
@@ -226,7 +230,8 @@ if ($telp->num_rows() > 0) {
                 <td>Username</td>
                 <td> : 
                     <?php
-                    $row4 = $user_data->row();
+                    // $row4 = $user_data->row();
+                    $row4 = $user_data;
 
                     $data = array(
                         'name' => 'username',
@@ -279,7 +284,8 @@ if ($telp->num_rows() > 0) {
                         $data = array(
                             'name' => 'email_username',
                             'size' => '30',
-                            'value' =>  $row->email_username 
+                            // 'value' =>  $row->email_username 
+                            'value' =>  $row->emp_username 
                         );
 
                         echo form_input($data);
@@ -294,7 +300,8 @@ if ($telp->num_rows() > 0) {
                         $data = array(
                             'name' => 'email_password',
                             'size' => '30',
-                            'value' => $row->email_password
+                            // 'value' => $row->email_password
+                            'value' => $row->emp_password
                         );
 
                         echo form_password($data);

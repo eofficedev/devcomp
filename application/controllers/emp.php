@@ -94,8 +94,31 @@ class Emp extends CI_Controller
 
 
         if ($this->form_validation->run() != false) {
-            $this->load->model('employee');
-            $q = $this->employee->add_employee();
+            // $this->load->model('employee');
+            // $q = $this->employee->add_employee();
+
+            $emp_model = array(
+                "emp_id" => $this->input->post('emp_id'),
+                "emp_firstname" => $this->input->post('emp_firstname'),
+                "emp_lastname" => $this->input->post('emp_lastname'),
+                "emp_gender" => $this->input->post('gender'),
+                "emp_dob" => $this->input->post("emp_dob"),
+                "emp_street" => $this->input->post("emp_street"),
+                "emp_email" => $this->input->post("emp_email"),
+                "emp_cutah" => "10", // should retrieve from configuration
+                "emp_trip" => "10", // should retrieve from configuration
+                "emp_cubes" => "10", // should retrieve from configuration
+                // "org_code" => $this->input->post('org_code'),
+                // "org_id" => $this->input->post("emp_org"),
+                "emp_job" => $this->input->post('emp_job'),
+                "job_code" => $this->input->post('job_code'),
+                // "org_code" => $this->input->post('org_code'),
+                "emp_username" => $this->input->post('email_username'),
+                "emp_password" => $this->input->post('email_password')
+            );
+    
+            $q = $this->employee_service->add_employee($emp_model);
+            var_dump($q); return;
 
             if ($q) {
                 redirect('emp');
@@ -110,26 +133,35 @@ class Emp extends CI_Controller
     public function view()
     {
         $get = $this->uri->uri_to_assoc();
-        $this->load->model('employee');
+        // $this->load->model('employee');
         $data['res'] = $get['id'];
 
-        $this->load->model('job');
-        $data['jobs'] = $this->job->get_all_job();
+        // $this->load->model('job');
+        // $data['jobs'] = $this->job->get_all_job();
+        $data['jobs'] = $this->job_service->get_all_job('', '');
 
-        $this->load->model('organization');
-        $data['org'] = $this->organization->get_all_org();
-        $data['employee_data'] = $this->employee->get_emp_data($data['res']);
-        $data['telp'] = $this->employee->get_employee_telp($data['res']);
-        
+        // $this->load->model('organization');
+        // $data['org'] = $this->organization->get_all_org();
+        $data['org'] = $this->organization_service->get_all_org('','');
+        // $data['employee_data'] = $this->employee->get_emp_data($data['res']);
+        $emp_data = $this->employee_service->get_emp_data($data['res']);
+        if(count($emp_data) > 0) $data['employee_data'] = $emp_data[0];
+        else $data['employee_data'] = $emp_data;
+        // $data['telp'] = $this->employee->get_employee_telp($data['res']);
         
         $data['title'] = 'Employee Profile';
         $data['mid_content'] = 'content/employee/update_employee';
         $res = $this->get_session();
 
-        $data['user_data'] = $this->employee->get_user_data($data['res']);
-        $orgid = $data['employee_data']->row()->org_id;
+        // $data['user_data'] = $this->employee->get_user_data($data['res']);
+        $user_data = $this->employee_service->get_user_data($data['res']);
+        if(count($user_data) > 0) $data['user_data'] = $user_data[0];
+        else $data['user_data'] = $user_data;
+        // $orgid = $data['employee_data']->row()->org_id;
+        $orgid = 0; //$data['employee_data']->org_id;
 
-        $data['job'] = $this->job->load_job_by_org($orgid);
+        //$data['job'] = $this->job->load_job_by_org($orgid);
+        $data['job'] = $this->job_service->get_byorgnum_job($orgid);
 
         $data['result'] = $res['result'];
         $data['app_config'] = $this->admin_config->load_app_config();

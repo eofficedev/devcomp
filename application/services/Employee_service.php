@@ -21,6 +21,21 @@ class Employee_service
         return json_decode($response->body);
     }
 
+    public function get_emp_data($id)
+    {
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+        $uri = $this->CI->config->item('eoffice_base_url') . '/employees/byid?id='. $id;
+        $response = Requests::get($uri);
+        return json_decode($response->body);
+    }
+
+    public function get_user_data($id){
+        $data = $this->get_emp_data($id);
+        return $data;
+    }
+
     public function get_detail_emp($username)
     {
         if ($this->CI == null) {
@@ -28,6 +43,19 @@ class Employee_service
         }
         $uri = $this->CI->config->item('eoffice_base_url') . '/employees?uname='. $username;
         $response = Requests::get($uri);
+        return json_decode($response->body);
+    }
+
+    public function add_employee($model){
+        if ($this->CI == null) {
+            throw new Exception('$CI instance not set! Please set it inside constructor.');
+        }
+
+        print_r(json_encode($model)); return;
+
+        $uri = $this->CI->config->item('eoffice_base_url') . '/employees';
+        $headers = array('Content-Type' => 'application/json');
+        $response = Requests::post($uri, $headers, json_encode($model));
         return json_decode($response->body);
     }
 }

@@ -34,7 +34,8 @@
             <th>Organisasi</th>
         </thead>
     <?php
-        foreach ($employees->result() as $row) {
+        // foreach ($employees->result() as $row) {
+            foreach ($employees as $row) {
             ?>
             <tr class="emp-data" >
                 <td style="padding-left: 10px;"><a style="color:black;" href="emp/view/id/<?php echo $row->emp_num; ?>"><?php echo $row->emp_id; ?></a></td>
